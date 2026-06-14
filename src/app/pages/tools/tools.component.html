@@ -1,0 +1,31 @@
+<div class="tool-view">
+  <!-- JSON Formatter Tool -->
+  <div *ngIf="selectedToolId === 'json-formatter'" class="tool-wrapper">
+    <app-json-formatter></app-json-formatter>
+  </div>
+
+  <!-- Placeholder for other tools -->
+  <div *ngIf="selectedTool && selectedToolId !== 'json-formatter'" class="tool-detail">
+    <h1>{{ selectedTool.name }}</h1>
+    <p class="tool-desc">{{ selectedTool.description }}</p>
+    
+    <div class="tool-content">
+      <div class="tool-section">
+        <h2>Tool Interface</h2>
+        <p>This tool interface will be developed with its specific functionality.</p>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noTool>
+    <div class="no-tool">
+      <h2>Select a Tool</h2>
+      <p>Choose a tool from the left sidebar to get started.</p>
+    </div>
+  </ng-template>
+
+  <div *ngIf="!selectedTool && !selectedToolId" class="no-tool">
+    <h2>Select a Tool</h2>
+    <p>Choose a tool from the left sidebar to get started.</p>
+  </div>
+</div>

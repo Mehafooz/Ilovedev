@@ -1,0 +1,124 @@
+<div class="json-formatter-container">
+  <div class="formatter-header">
+    <h2>JSON Formatter & Validator</h2>
+    <p class="subtitle">Format, validate, and view JSON with syntax highlighting</p>
+  </div>
+
+  <div class="controls-bar">
+    <div class="control-group">
+      <label for="indent">Indent Size:</label>
+      <select 
+        id="indent" 
+        [(ngModel)]="indentSize" 
+        (change)="onIndentChange()"
+        class="indent-select"
+      >
+        <option value="2">2 spaces</option>
+        <option value="4">4 spaces</option>
+        <option value="8">8 spaces</option>
+      </select>
+    </div>
+
+    <div class="button-group">
+      <button (click)="format()" class="btn btn-primary" title="Format JSON">
+        <span class="icon">✨</span> Format
+      </button>
+      <button (click)="minify()" class="btn btn-secondary" title="Minify JSON">
+        <span class="icon">⚙️</span> Minify
+      </button>
+      <button (click)="swapInputOutput()" class="btn btn-secondary" title="Swap input and output">
+        <span class="icon">⇄</span> Swap
+      </button>
+      <button (click)="clearInput()" class="btn btn-secondary" title="Clear all">
+        <span class="icon">🗑️</span> Clear
+      </button>
+      <button (click)="downloadJson()" class="btn btn-secondary" title="Download as JSON file">
+        <span class="icon">⬇️</span> Download
+      </button>
+      <label class="btn btn-secondary upload-btn" title="Upload JSON file">
+        <span class="icon">📤</span> Upload
+        <input 
+          type="file" 
+          accept=".json,.txt" 
+          (change)="uploadJson($event)" 
+          style="display: none"
+        />
+      </label>
+    </div>
+  </div>
+
+  <div class="editor-container">
+    <div class="editor-section input-section">
+      <div class="section-header">
+        <h3>Input</h3>
+        <div class="header-controls">
+          <button 
+            (click)="copyToClipboard(inputJson)" 
+            class="btn-small"
+            [disabled]="!inputJson"
+            title="Copy input"
+          >
+            📋 Copy
+          </button>
+        </div>
+      </div>
+      <textarea
+        [(ngModel)]="inputJson"
+        (blur)="format()"
+        placeholder="Paste your JSON here..."
+        class="editor-textarea"
+        spellcheck="false"
+      ></textarea>
+    </div>
+
+    <div class="editor-section output-section">
+      <div class="section-header">
+        <h3>Output</h3>
+        <div class="header-controls">
+          <span 
+            [class]="'status-badge ' + (isValid ? 'valid' : 'invalid')"
+            [title]="isValid ? 'Valid JSON' : (error || 'Invalid JSON')"
+          >
+            {{ isValid ? '✓ Valid' : '✗ Invalid' }}
+          </span>
+          <button 
+            (click)="copyToClipboard(outputJson)" 
+            class="btn-small"
+            [disabled]="!outputJson"
+            title="Copy output"
+          >
+            📋 Copy
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="error" class="error-box">
+        <div class="error-title">⚠️ Error</div>
+        <div class="error-message">{{ error }}</div>
+      </div>
+
+      <div *ngIf="!error && isValid" class="output-display">
+        <pre class="json-output"><code [innerText]="outputJson"></code></pre>
+      </div>
+
+      <div *ngIf="!error && !isValid && !outputJson" class="placeholder">
+        Formatted JSON will appear here
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-container" *ngIf="outputJson">
+    <div class="stat-item">
+      <div class="stat-label">Lines</div>
+      <div class="stat-value">{{ stats.lines }}</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Characters</div>
+      <div class="stat-value">{{ stats.characters }}</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Size</div>
+      <div class="stat-value">{{ stats.size }}</div>
+    </div>
+  </div>
+</div>

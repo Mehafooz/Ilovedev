@@ -1,0 +1,14 @@
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h2>Tools</h2>
+  </div>
+  <nav class="sidebar-nav">
+    <a *ngFor="let tool of tools"
+       [routerLink]="tool.route"
+       routerLinkActive="active"
+       class="sidebar-item">
+      <div class="sidebar-item-name">{{ tool.name }}</div>
+      <div class="sidebar-item-desc">{{ tool.description }}</div>
+    </a>
+  </nav>
+</aside>
