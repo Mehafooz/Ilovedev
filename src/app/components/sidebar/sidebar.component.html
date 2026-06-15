@@ -7,7 +7,10 @@
        [routerLink]="tool.route"
        routerLinkActive="active"
        class="sidebar-item">
-      <div class="sidebar-item-name">{{ tool.name }}</div>
+      <div class="sidebar-item-top">
+        <div class="sidebar-item-name">{{ tool.name }}</div>
+        <span *ngIf="tool.status === 'building'" class="status-pill">Building</span>
+      </div>
       <div class="sidebar-item-desc">{{ tool.description }}</div>
     </a>
   </nav>

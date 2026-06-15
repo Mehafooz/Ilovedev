@@ -11,13 +11,14 @@
 
   <!-- Placeholder for other tools -->
   <div *ngIf="selectedTool && selectedToolId !== 'json-formatter' && selectedToolId !== 'xml-json'" class="tool-detail">
+    <span class="status-label">Currently building</span>
     <h1>{{ selectedTool.name }}</h1>
-    <p class="tool-desc">{{ selectedTool.description }}</p>
+    <p class="tool-desc">This tool is on the roadmap and will be available soon.</p>
     
     <div class="tool-content">
       <div class="tool-section">
-        <h2>Tool Interface</h2>
-        <p>This tool interface will be developed with its specific functionality.</p>
+        <h2>Coming soon</h2>
+        <p>JSON Formatter and XML ↔ JSON are ready to use today. This workspace is being shaped one focused tool at a time.</p>
       </div>
     </div>
   </div>
