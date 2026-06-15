@@ -1,23 +1,21 @@
 .xml-formatter-container {
   max-width: 1200px;
-  min-height: 100vh;
+  width: 100%;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: clamp(24px, 4vw, 40px) clamp(14px, 3vw, 20px);
   background: #fff;
   color: #1a1a1a;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 .formatter-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: clamp(24px, 4vw, 40px);
 }
 
 .formatter-header h2 {
   margin: 0 0 8px;
-  font-size: 32px;
+  font-size: clamp(24px, 5vw, 32px);
   font-weight: 600;
-  letter-spacing: 0;
 }
 
 .subtitle {
@@ -67,10 +65,12 @@
 .btn {
   padding: 10px 18px;
   font-size: 14px;
+  min-height: 42px;
 }
 
 .btn {
   display: inline-flex;
+  align-items: center;
   justify-content: center;
   white-space: nowrap;
 }
@@ -99,7 +99,7 @@
 
 .editor-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 24px;
   margin-bottom: 24px;
 }
@@ -163,7 +163,8 @@
 .editor-textarea,
 .output-display,
 .placeholder {
-  min-height: 420px;
+  min-height: clamp(300px, 48vh, 420px);
+  width: 100%;
   padding: 16px;
   background: #fafafa;
   border: 1px solid #e0e0e0;
@@ -184,6 +185,7 @@
   line-height: 1.6;
   resize: none;
   outline: none;
+  overflow: auto;
 }
 
 .editor-textarea:focus {
@@ -228,7 +230,7 @@
   margin: 0;
   color: #1a1a1a;
   line-height: 1.6;
-  word-wrap: break-word;
+  overflow-wrap: anywhere;
   overflow: auto;
 }
 
@@ -289,10 +291,12 @@
   .button-group {
     margin-left: 0;
     width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .btn {
-    flex: 1;
+    justify-content: center;
   }
 }
 
@@ -301,15 +305,14 @@
     padding: 24px 16px;
   }
 
-  .formatter-header h2 {
-    font-size: 24px;
-  }
-
   .controls-bar,
-  .button-group,
   .section-header {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .button-group {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .control-group,
@@ -326,5 +329,15 @@
 
   .stats-container {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .button-group {
+    grid-template-columns: 1fr;
+  }
+
+  .indent-select {
+    width: 100%;
   }
 }

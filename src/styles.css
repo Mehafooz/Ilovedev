@@ -29,6 +29,13 @@ app-root {
   height: 100%;
 }
 
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 8px;

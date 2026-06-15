@@ -26,6 +26,13 @@ export class SidebarComponent {
       route: '/tools/json-formatter',
       status: 'available'
     },
+     {
+      id: 'xml-formatter',
+      name: 'XML Formatter',
+      description: 'Format and validate XML',
+      route: '/tools/xml-formatter',
+      status: 'available'
+    },
     {
       id: 'xml-json',
       name: 'XML ↔ JSON',
@@ -81,13 +88,6 @@ export class SidebarComponent {
       description: 'Currently building',
       route: '/tools/sql-formatter',
       status: 'building'
-    },
-    {
-      id: 'xml-formatter',
-      name: 'XML Formatter',
-      description: 'Format and validate XML',
-      route: '/tools/xml-formatter',
-      status: 'available'
     },
     {
       id: 'markdown-preview',
