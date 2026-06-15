@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { JsonFormatterComponent } from '../../components/json-formatter/json-formatter.component';
 import { XmlJsonComponent } from '../../components/xml-json/xml-json.component';
+import { XmlFormatterComponent } from '../../components/xml-formatter/xml-formatter.component';
 
 interface Tool {
   id: string;
@@ -14,7 +15,7 @@ interface Tool {
 @Component({
   selector: 'app-tools',
   standalone: true,
-  imports: [CommonModule, JsonFormatterComponent, XmlJsonComponent],
+  imports: [CommonModule, JsonFormatterComponent, XmlJsonComponent, XmlFormatterComponent],
   templateUrl: './tools.component.html',
   styleUrl: './tools.component.css'
 })
@@ -23,7 +24,7 @@ export class ToolsComponent implements OnInit {
     {
       id: 'json-formatter',
       name: 'JSON Formatter',
-      description: 'Format and validate JSON with syntax highlighting',
+      description: 'Format and validate JSON',
       status: 'available'
     },
     {
@@ -77,8 +78,8 @@ export class ToolsComponent implements OnInit {
     {
       id: 'xml-formatter',
       name: 'XML Formatter',
-      description: 'Currently building',
-      status: 'building'
+      description: 'Format and validate XML',
+      status: 'available'
     },
     {
       id: 'markdown-preview',

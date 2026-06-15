@@ -85,9 +85,9 @@ export class SidebarComponent {
     {
       id: 'xml-formatter',
       name: 'XML Formatter',
-      description: 'Currently building',
+      description: 'Format and validate XML',
       route: '/tools/xml-formatter',
-      status: 'building'
+      status: 'available'
     },
     {
       id: 'markdown-preview',

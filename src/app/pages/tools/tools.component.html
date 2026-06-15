@@ -9,8 +9,13 @@
     <app-xml-json></app-xml-json>
   </div>
 
+  <!-- XML Formatter Tool -->
+  <div *ngIf="selectedToolId === 'xml-formatter'" class="tool-wrapper">
+    <app-xml-formatter></app-xml-formatter>
+  </div>
+
   <!-- Placeholder for other tools -->
-  <div *ngIf="selectedTool && selectedToolId !== 'json-formatter' && selectedToolId !== 'xml-json'" class="tool-detail">
+  <div *ngIf="selectedTool && selectedToolId !== 'json-formatter' && selectedToolId !== 'xml-json' && selectedToolId !== 'xml-formatter'" class="tool-detail">
     <span class="status-label">Currently building</span>
     <h1>{{ selectedTool.name }}</h1>
     <p class="tool-desc">This tool is on the roadmap and will be available soon.</p>

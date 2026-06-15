@@ -176,6 +176,16 @@
   font-size: 16px;
 }
 
+.notice {
+  margin-top: 16px;
+  padding: 10px 12px;
+  background: #f4f7fb;
+  border: 1px solid #d8e2f0;
+  border-radius: 6px;
+  color: #2f4d6f;
+  font-size: 13px;
+}
+
 .editor-footer {
   display: flex;
   gap: 8px;

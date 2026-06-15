@@ -31,7 +31,7 @@
       </label>
       <textarea
         [(ngModel)]="inputValue"
-        (blur)="convert()"
+        (ngModelChange)="onInputChange()"
         [placeholder]="mode === 'xml-to-json' ? 'Paste XML here...' : 'Paste JSON here...'"
         class="editor"
         spellcheck="false"
@@ -49,7 +49,7 @@
       </label>
       <div class="output-display">
         <div *ngIf="error" class="error-message">
-          <span class="error-icon">⚠️</span> {{ error }}
+          {{ error }}
         </div>
         <pre *ngIf="!error && isValid" class="output-text"><code [innerText]="outputValue"></code></pre>
         <div *ngIf="!error && !outputValue" class="placeholder">
@@ -69,9 +69,11 @@
 
   <div class="actions">
     <label class="btn-upload">
-      📤 Upload File
+      Upload File
       <input type="file" (change)="uploadFile($event)" style="display: none" />
     </label>
     <button (click)="clearAll()" class="btn-clear">Clear All</button>
   </div>
+
+  <div *ngIf="notice" class="notice">{{ notice }}</div>
 </div>

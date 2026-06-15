@@ -1,4 +1,4 @@
-.json-formatter-container {
+.xml-formatter-container {
   max-width: 1200px;
   min-height: 100vh;
   margin: 0 auto;
@@ -63,11 +63,6 @@
   transition: all 0.2s ease;
 }
 
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
 .indent-select,
 .btn {
   padding: 10px 18px;
@@ -76,13 +71,19 @@
 
 .btn {
   display: inline-flex;
-  gap: 6px;
+  justify-content: center;
   white-space: nowrap;
+}
+
+.btn:disabled,
+.btn-small:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .indent-select:hover,
 .indent-select:focus,
-.btn:hover,
+.btn:hover:not(:disabled),
 .btn-small:hover:not(:disabled) {
   border-color: #1a1a1a;
   background: #f9f9f9;
@@ -90,14 +91,10 @@
 }
 
 .btn-primary,
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
   background: #1a1a1a;
   color: #fff;
   border-color: #1a1a1a;
-}
-
-.upload-btn {
-  position: relative;
 }
 
 .editor-container {
@@ -130,15 +127,16 @@
   letter-spacing: 0.5px;
 }
 
+.meta-text {
+  color: #777;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
 .btn-small {
   padding: 6px 14px;
   border-radius: 4px;
   font-size: 12px;
-}
-
-.btn-small:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
 
 .status-badge {
@@ -146,12 +144,6 @@
   border-radius: 4px;
   font-size: 12px;
   font-weight: 600;
-  white-space: nowrap;
-}
-
-.meta-text {
-  color: #777;
-  font-size: 12px;
   white-space: nowrap;
 }
 
@@ -179,7 +171,7 @@
 }
 
 .editor-textarea,
-.json-output,
+.xml-output,
 .error-message,
 .stat-value {
   font-family: Monaco, Menlo, 'Courier New', monospace;
@@ -216,7 +208,7 @@
 }
 
 .error-message,
-.json-output {
+.xml-output {
   font-size: 13px;
   white-space: pre-wrap;
 }
@@ -231,7 +223,7 @@
   overflow: hidden;
 }
 
-.json-output {
+.xml-output {
   flex: 1;
   margin: 0;
   color: #1a1a1a;
@@ -240,7 +232,7 @@
   overflow: auto;
 }
 
-.json-output code {
+.xml-output code {
   display: block;
 }
 
@@ -252,12 +244,6 @@
   font-size: 14px;
 }
 
-.stats-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 12px;
-}
-
 .notice {
   margin: 0 0 16px;
   padding: 10px 12px;
@@ -266,6 +252,12 @@
   border-radius: 6px;
   color: #2f4d6f;
   font-size: 13px;
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
 }
 
 .stat-item {
@@ -301,12 +293,11 @@
 
   .btn {
     flex: 1;
-    justify-content: center;
   }
 }
 
 @media (max-width: 640px) {
-  .json-formatter-container {
+  .xml-formatter-container {
     padding: 24px 16px;
   }
 

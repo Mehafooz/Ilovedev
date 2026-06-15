@@ -1,0 +1,100 @@
+<div class="xml-formatter-container">
+  <div class="formatter-header">
+    <h2>XML Formatter & Validator</h2>
+    <p class="subtitle">Format, minify, validate, upload, copy, and download XML.</p>
+  </div>
+
+  <div class="controls-bar">
+    <div class="control-group">
+      <label for="xml-indent">Indent Size:</label>
+      <select
+        id="xml-indent"
+        [(ngModel)]="indentSize"
+        (change)="onIndentChange()"
+        class="indent-select"
+      >
+        <option [ngValue]="2">2 spaces</option>
+        <option [ngValue]="4">4 spaces</option>
+        <option [ngValue]="8">8 spaces</option>
+      </select>
+    </div>
+
+    <div class="button-group">
+      <button (click)="format()" class="btn btn-primary" title="Format XML">Format</button>
+      <button (click)="minify()" class="btn btn-secondary" title="Minify XML">Minify</button>
+      <button (click)="validate()" class="btn btn-secondary" title="Validate XML">Validate</button>
+      <button (click)="useOutputAsInput()" class="btn btn-secondary" [disabled]="!outputXml" title="Use output as input">Use Output</button>
+      <button (click)="clearInput()" class="btn btn-secondary" title="Clear all">Clear</button>
+      <button (click)="downloadXml()" class="btn btn-secondary" title="Download as XML file">Download</button>
+      <label class="btn btn-secondary upload-btn" title="Upload XML file">
+        Upload
+        <input type="file" accept=".xml,.txt" (change)="uploadXml($event)" style="display: none" />
+      </label>
+    </div>
+  </div>
+
+  <div class="editor-container">
+    <div class="editor-section">
+      <div class="section-header">
+        <h3>Input</h3>
+        <div class="header-controls">
+          <span class="meta-text">{{ inputXml.length }} chars</span>
+          <button (click)="copyToClipboard(inputXml)" class="btn-small" [disabled]="!inputXml" title="Copy input">
+            Copy
+          </button>
+        </div>
+      </div>
+      <textarea
+        [(ngModel)]="inputXml"
+        (ngModelChange)="onInputChange()"
+        placeholder="Paste your XML here..."
+        class="editor-textarea"
+        spellcheck="false"
+      ></textarea>
+    </div>
+
+    <div class="editor-section">
+      <div class="section-header">
+        <h3>Output</h3>
+        <div class="header-controls">
+          <span [class]="'status-badge ' + (isValid ? 'valid' : 'invalid')" [title]="isValid ? 'Valid XML' : (error || 'Invalid XML')">
+            {{ isValid ? 'Valid' : 'Invalid' }}
+          </span>
+          <button (click)="copyToClipboard(outputXml)" class="btn-small" [disabled]="!outputXml" title="Copy output">
+            Copy
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="error" class="error-box">
+        <div class="error-title">Error</div>
+        <div class="error-message">{{ error }}</div>
+      </div>
+
+      <div *ngIf="!error && isValid" class="output-display">
+        <pre class="xml-output"><code [innerText]="outputXml"></code></pre>
+      </div>
+
+      <div *ngIf="!error && !isValid && !outputXml" class="placeholder">
+        Formatted XML will appear here
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="notice" class="notice">{{ notice }}</div>
+
+  <div class="stats-container" *ngIf="outputXml">
+    <div class="stat-item">
+      <div class="stat-label">Lines</div>
+      <div class="stat-value">{{ stats.lines }}</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Characters</div>
+      <div class="stat-value">{{ stats.characters }}</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Size</div>
+      <div class="stat-value">{{ stats.size }}</div>
+    </div>
+  </div>
+</div>

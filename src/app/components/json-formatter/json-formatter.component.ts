@@ -13,6 +13,7 @@ export class JsonFormatterComponent implements OnInit {
   inputJson: string = '';
   outputJson: string = '';
   error: string | null = null;
+  notice: string | null = null;
   isValid: boolean = false;
   stats = {
     lines: 0,
@@ -20,7 +21,6 @@ export class JsonFormatterComponent implements OnInit {
     size: '0 B'
   };
   indentSize: number = 2;
-  showMinified: boolean = false;
 
   ngOnInit(): void {
     // Initialize with sample JSON
@@ -36,6 +36,7 @@ export class JsonFormatterComponent implements OnInit {
   format(): void {
     try {
       this.error = null;
+      this.notice = null;
       
       if (!this.inputJson.trim()) {
         this.outputJson = '';
@@ -44,10 +45,7 @@ export class JsonFormatterComponent implements OnInit {
         return;
       }
 
-      // Parse the JSON
       const parsed = JSON.parse(this.inputJson);
-      
-      // Format with selected indentation
       const formatted = JSON.stringify(parsed, null, this.indentSize);
       this.outputJson = formatted;
       this.isValid = true;
@@ -56,16 +54,19 @@ export class JsonFormatterComponent implements OnInit {
       this.isValid = false;
       this.error = e.message || 'Invalid JSON';
       this.outputJson = '';
+      this.updateStats();
     }
   }
 
   minify(): void {
     try {
       this.error = null;
+      this.notice = null;
       
       if (!this.inputJson.trim()) {
         this.outputJson = '';
         this.isValid = false;
+        this.updateStats();
         return;
       }
 
@@ -77,21 +78,29 @@ export class JsonFormatterComponent implements OnInit {
       this.isValid = false;
       this.error = e.message || 'Invalid JSON';
       this.outputJson = '';
+      this.updateStats();
     }
   }
 
   beautify(): void {
-    this.showMinified = false;
     this.format();
   }
 
   copyToClipboard(text: string): void {
-    navigator.clipboard.writeText(text).then(() => {
-      alert('Copied to clipboard!');
-    });
+    if (!text) {
+      return;
+    }
+
+    navigator.clipboard.writeText(text)
+      .then(() => this.showNotice('Copied to clipboard'))
+      .catch(() => this.showNotice('Clipboard access was blocked'));
   }
 
   swapInputOutput(): void {
+    if (!this.outputJson) {
+      return;
+    }
+
     [this.inputJson, this.outputJson] = [this.outputJson, this.inputJson];
     this.format();
   }
@@ -100,32 +109,42 @@ export class JsonFormatterComponent implements OnInit {
     this.inputJson = '';
     this.outputJson = '';
     this.error = null;
+    this.notice = null;
     this.isValid = false;
     this.updateStats();
   }
 
   downloadJson(): void {
     if (!this.outputJson) {
-      alert('No formatted JSON to download');
+      this.showNotice('Format valid JSON before downloading');
       return;
     }
 
     const element = document.createElement('a');
     const file = new Blob([this.outputJson], { type: 'application/json' });
-    element.href = URL.createObjectURL(file);
+    const url = URL.createObjectURL(file);
+    element.href = url;
     element.download = 'formatted.json';
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
+    URL.revokeObjectURL(url);
+    this.showNotice('Downloaded formatted.json');
   }
 
-  uploadJson(event: any): void {
-    const file = event.target.files[0];
+  uploadJson(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.inputJson = e.target.result;
+      reader.onload = () => {
+        this.inputJson = String(reader.result || '');
         this.format();
+        input.value = '';
+      };
+      reader.onerror = () => {
+        this.showNotice('Could not read that file');
+        input.value = '';
       };
       reader.readAsText(file);
     }
@@ -148,5 +167,18 @@ export class JsonFormatterComponent implements OnInit {
 
   onIndentChange(): void {
     this.format();
+  }
+
+  onInputChange(): void {
+    this.format();
+  }
+
+  private showNotice(message: string): void {
+    this.notice = message;
+    window.setTimeout(() => {
+      if (this.notice === message) {
+        this.notice = null;
+      }
+    }, 1800);
   }
 }
