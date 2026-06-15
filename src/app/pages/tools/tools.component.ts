@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { JsonFormatterComponent } from '../../components/json-formatter/json-formatter.component';
+import { XmlJsonComponent } from '../../components/xml-json/xml-json.component';
 
 interface Tool {
   id: string;
@@ -12,7 +13,7 @@ interface Tool {
 @Component({
   selector: 'app-tools',
   standalone: true,
-  imports: [CommonModule, JsonFormatterComponent],
+  imports: [CommonModule, JsonFormatterComponent, XmlJsonComponent],
   templateUrl: './tools.component.html',
   styleUrl: './tools.component.css'
 })
@@ -22,6 +23,11 @@ export class ToolsComponent implements OnInit {
       id: 'json-formatter',
       name: 'JSON Formatter',
       description: 'Format and validate JSON with syntax highlighting'
+    },
+    {
+      id: 'xml-json',
+      name: 'XML ↔ JSON',
+      description: 'Bidirectional conversion between XML and JSON'
     },
     {
       id: 'code-converter',
@@ -56,10 +62,10 @@ export class ToolsComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params: any) => {
       if (params['id']) {
         this.selectedToolId = params['id'];
-        this.selectedTool = this.tools.find(t => t.id === params['id']) || null;
+        this.selectedTool = this.tools.find((t: Tool) => t.id === params['id']) || null;
       }
     });
   }

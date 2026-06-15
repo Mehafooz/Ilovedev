@@ -4,8 +4,13 @@
     <app-json-formatter></app-json-formatter>
   </div>
 
+  <!-- XML ↔ JSON Tool -->
+  <div *ngIf="selectedToolId === 'xml-json'" class="tool-wrapper">
+    <app-xml-json></app-xml-json>
+  </div>
+
   <!-- Placeholder for other tools -->
-  <div *ngIf="selectedTool && selectedToolId !== 'json-formatter'" class="tool-detail">
+  <div *ngIf="selectedTool && selectedToolId !== 'json-formatter' && selectedToolId !== 'xml-json'" class="tool-detail">
     <h1>{{ selectedTool.name }}</h1>
     <p class="tool-desc">{{ selectedTool.description }}</p>
     

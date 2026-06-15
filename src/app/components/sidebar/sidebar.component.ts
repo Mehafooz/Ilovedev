@@ -25,6 +25,12 @@ export class SidebarComponent {
       route: '/tools/json-formatter'
     },
     {
+      id: 'xml-json',
+      name: 'XML ↔ JSON',
+      description: 'Convert between XML and JSON',
+      route: '/tools/xml-json'
+    },
+    {
       id: 'code-converter',
       name: 'Code Converter',
       description: 'Convert between code formats',

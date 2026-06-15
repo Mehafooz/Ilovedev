@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="header">
+    <h1>XML ↔ JSON</h1>
+    <p>Bidirectional conversion between XML and JSON.</p>
+  </div>
+
+  <div class="controls">
+    <div class="mode-buttons">
+      <button 
+        (click)="setMode('xml-to-json')"
+        [class.active]="mode === 'xml-to-json'"
+        class="btn-mode"
+      >
+        XML → JSON
+      </button>
+      <button 
+        (click)="setMode('json-to-xml')"
+        [class.active]="mode === 'json-to-xml'"
+        class="btn-mode"
+      >
+        JSON → XML
+      </button>
+    </div>
+    <button (click)="swapDirection()" class="btn-swap">Swap direction</button>
+  </div>
+
+  <div class="editors">
+    <div class="editor-wrapper">
+      <label class="editor-label">
+        {{ mode === 'xml-to-json' ? 'XML Input' : 'JSON Input' }}
+      </label>
+      <textarea
+        [(ngModel)]="inputValue"
+        (blur)="convert()"
+        [placeholder]="mode === 'xml-to-json' ? 'Paste XML here...' : 'Paste JSON here...'"
+        class="editor"
+        spellcheck="false"
+      ></textarea>
+      <div class="editor-footer">
+        <button (click)="copyToClipboard(inputValue)" class="btn-small" [disabled]="!inputValue">
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <div class="editor-wrapper">
+      <label class="editor-label">
+        {{ mode === 'xml-to-json' ? 'JSON Output' : 'XML Output' }}
+      </label>
+      <div class="output-display">
+        <div *ngIf="error" class="error-message">
+          <span class="error-icon">⚠️</span> {{ error }}
+        </div>
+        <pre *ngIf="!error && isValid" class="output-text"><code [innerText]="outputValue"></code></pre>
+        <div *ngIf="!error && !outputValue" class="placeholder">
+          Converted output will appear here
+        </div>
+      </div>
+      <div class="editor-footer">
+        <button (click)="copyToClipboard(outputValue)" class="btn-small" [disabled]="!outputValue">
+          Copy
+        </button>
+        <button (click)="downloadOutput()" class="btn-small" [disabled]="!outputValue">
+          Download
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <label class="btn-upload">
+      📤 Upload File
+      <input type="file" (change)="uploadFile($event)" style="display: none" />
+    </label>
+    <button (click)="clearAll()" class="btn-clear">Clear All</button>
+  </div>
+</div>
