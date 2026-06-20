@@ -1,0 +1,257 @@
+<div class="ip-tool">
+  <div class="tool-header">
+    <h1>IP Address Lookup - What Is My IP Address?</h1>
+    <p class="tool-description">
+      Free IP address lookup tool. Check your current IP address, location, ISP, and detailed geolocation information. 
+      Lookup any IP address to find its location and network details instantly.
+    </p>
+  </div>
+
+  <div class="tool-content">
+    <!-- My IP Section -->
+    <div class="my-ip-section">
+      <div class="section-header">
+        <h2>Your IP Address</h2>
+        <button class="btn-refresh" (click)="getMyIp()" [disabled]="loading">
+          ↻ Refresh
+        </button>
+      </div>
+
+      <div *ngIf="loading && !myIpInfo" class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Loading IP information...</p>
+      </div>
+
+      <div *ngIf="myIpInfo" class="ip-display-card">
+        <div class="ip-main">
+          <div class="ip-value">{{ myIpInfo.ip }}</div>
+          <button 
+            class="btn-copy-inline" 
+            (click)="copyToClipboard(myIpInfo.ip, 'my-ip')"
+            [class.copied]="copiedField === 'my-ip'"
+          >
+            {{ copiedField === 'my-ip' ? '✓' : 'Copy' }}
+          </button>
+        </div>
+
+        <div class="ip-details-grid">
+          <div class="detail-item" *ngIf="myIpInfo.city">
+            <span class="detail-icon">📍</span>
+            <div class="detail-content">
+              <label>Location</label>
+              <span>{{ myIpInfo.city }}, {{ myIpInfo.region }}, {{ myIpInfo.country }}</span>
+            </div>
+          </div>
+
+          <div class="detail-item" *ngIf="myIpInfo.org">
+            <span class="detail-icon">🌐</span>
+            <div class="detail-content">
+              <label>ISP / Organization</label>
+              <span>{{ myIpInfo.org }}</span>
+            </div>
+          </div>
+
+          <div class="detail-item" *ngIf="myIpInfo.timezone">
+            <span class="detail-icon">🕒</span>
+            <div class="detail-content">
+              <label>Timezone</label>
+              <span>{{ myIpInfo.timezone }}</span>
+            </div>
+          </div>
+
+          <div class="detail-item" *ngIf="myIpInfo.loc">
+            <span class="detail-icon">🗺️</span>
+            <div class="detail-content">
+              <label>Coordinates</label>
+              <span>{{ myIpInfo.loc }}</span>
+              <button class="btn-link" (click)="openInMaps(myIpInfo.loc!)">View on Map</button>
+            </div>
+          </div>
+
+          <div class="detail-item" *ngIf="myIpInfo.postal">
+            <span class="detail-icon">📮</span>
+            <div class="detail-content">
+              <label>Postal Code</label>
+              <span>{{ myIpInfo.postal }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom IP Lookup -->
+    <div class="lookup-section">
+      <div class="section-header">
+        <h2>Lookup Any IP Address</h2>
+        <button class="btn-secondary" (click)="clearCustom()">Clear</button>
+      </div>
+
+      <div class="lookup-input-group">
+        <input
+          type="text"
+          [(ngModel)]="customIp"
+          (keyup.enter)="lookupCustomIp()"
+          placeholder="Enter IP address (e.g., 8.8.8.8)"
+          class="ip-input"
+        >
+        <button class="btn-primary" (click)="lookupCustomIp()" [disabled]="loading">
+          {{ loading ? 'Looking up...' : 'Lookup' }}
+        </button>
+      </div>
+
+      <!-- Quick Examples -->
+      <div class="examples-section">
+        <label>Try these IPs:</label>
+        <div class="example-chips">
+          <button 
+            *ngFor="let example of ipExamples" 
+            class="example-chip"
+            (click)="loadExample(example.ip)"
+          >
+            {{ example.name }} ({{ example.ip }})
+          </button>
+        </div>
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="error" class="error-message">
+        <span class="error-icon">⚠️</span>
+        <span>{{ error }}</span>
+      </div>
+
+      <!-- Custom IP Results -->
+      <div *ngIf="customIpInfo" class="ip-result-card">
+        <h3>IP Information for {{ customIpInfo.ip }}</h3>
+        
+        <div class="ip-details-grid">
+          <div class="detail-item" *ngIf="customIpInfo.city">
+            <span class="detail-icon">📍</span>
+            <div class="detail-content">
+              <label>Location</label>
+              <span>{{ customIpInfo.city }}, {{ customIpInfo.region }}, {{ customIpInfo.country }}</span>
+            </div>
+          </div>
+
+          <div class="detail-item" *ngIf="customIpInfo.org">
+            <span class="detail-icon">🌐</span>
+            <div class="detail-content">
+              <label>ISP / Organization</label>
+              <span>{{ customIpInfo.org }}</span>
+            </div>
+          </div>
+
+          <div class="detail-item" *ngIf="customIpInfo.timezone">
+            <span class="detail-icon">🕒</span>
+            <div class="detail-content">
+              <label>Timezone</label>
+              <span>{{ customIpInfo.timezone }}</span>
+            </div>
+          </div>
+
+          <div class="detail-item" *ngIf="customIpInfo.loc">
+            <span class="detail-icon">🗺️</span>
+            <div class="detail-content">
+              <label>Coordinates</label>
+              <span>{{ customIpInfo.loc }}</span>
+              <button class="btn-link" (click)="openInMaps(customIpInfo.loc!)">View on Map</button>
+            </div>
+          </div>
+
+          <div class="detail-item" *ngIf="customIpInfo.postal">
+            <span class="detail-icon">📮</span>
+            <div class="detail-content">
+              <label>Postal Code</label>
+              <span>{{ customIpInfo.postal }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="info-section">
+      <h2>About IP Address Lookup</h2>
+      
+      <div class="info-content">
+        <p>
+          An IP (Internet Protocol) address is a unique numerical label assigned to each device connected to a network. 
+          Our IP lookup tool helps you find detailed information about any IP address including location, ISP, and more.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>🔍 What You Can Find</h3>
+            <ul>
+              <li>IP address location (city, region, country)</li>
+              <li>Internet Service Provider (ISP)</li>
+              <li>Organization and hostname</li>
+              <li>Geographic coordinates</li>
+              <li>Timezone information</li>
+              <li>Postal code</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h3>💡 Common Uses</h3>
+            <ul>
+              <li>Check your own IP address</li>
+              <li>Troubleshoot network issues</li>
+              <li>Verify VPN/proxy connections</li>
+              <li>Geolocation analysis</li>
+              <li>Security investigations</li>
+              <li>Website visitor tracking</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h3>🌐 IP Address Types</h3>
+            <ul>
+              <li><strong>IPv4:</strong> 32-bit address (e.g., 192.168.1.1)</li>
+              <li><strong>IPv6:</strong> 128-bit address (newer format)</li>
+              <li><strong>Public IP:</strong> Visible on internet</li>
+              <li><strong>Private IP:</strong> Local network only</li>
+              <li><strong>Static IP:</strong> Permanent address</li>
+              <li><strong>Dynamic IP:</strong> Changes periodically</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h3>🔒 Privacy & Security</h3>
+            <ul>
+              <li>IP addresses can reveal your location</li>
+              <li>ISPs can track your online activity</li>
+              <li>Use VPN for privacy protection</li>
+              <li>Public WiFi may expose your IP</li>
+              <li>IP blocking for security</li>
+              <li>Geoblocking uses IP location</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="faq-section">
+          <h3>Frequently Asked Questions</h3>
+          
+          <div class="faq-item">
+            <h4>What is my IP address?</h4>
+            <p>Your IP address is displayed at the top of this page. It's the unique identifier assigned to your device by your Internet Service Provider.</p>
+          </div>
+
+          <div class="faq-item">
+            <h4>Can someone track me with my IP address?</h4>
+            <p>Your IP address can reveal your approximate location (city/region) and ISP, but not your exact physical address. Use a VPN for enhanced privacy.</p>
+          </div>
+
+          <div class="faq-item">
+            <h4>How accurate is IP geolocation?</h4>
+            <p>IP geolocation is typically accurate to the city level (85-95% accuracy), but less precise for exact addresses. Rural areas may show less accurate results.</p>
+          </div>
+
+          <div class="faq-item">
+            <h4>Why does my IP address change?</h4>
+            <p>Most home internet connections use dynamic IP addresses that change periodically. Business connections often use static IPs that remain constant.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

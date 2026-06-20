@@ -1,0 +1,230 @@
+<div class="qr-tool">
+  <div class="tool-header">
+    <h1>QR Code Generator - Create QR Codes Online Free</h1>
+    <p class="tool-description">
+      Free online QR code generator. Create custom QR codes for URLs, text, WiFi credentials, contact info, and more. 
+      Download high-quality QR codes instantly. No sign-up required.
+    </p>
+  </div>
+
+  <div class="tool-content">
+    <!-- Input Section -->
+    <div class="input-section">
+      <div class="section-header">
+        <h2>Enter Content</h2>
+        <div class="action-buttons">
+          <button class="btn-secondary" (click)="loadExample()">Load Example</button>
+          <button class="btn-secondary" (click)="clearAll()">Clear</button>
+        </div>
+      </div>
+
+      <textarea
+        [(ngModel)]="inputText"
+        (ngModelChange)="generateQRCode()"
+        placeholder="Enter URL, text, or any content for your QR code..."
+        class="input-textarea"
+        rows="4"
+      ></textarea>
+
+      <!-- Quick Templates -->
+      <div class="templates-section">
+        <label class="templates-label">Quick Templates:</label>
+        <div class="template-chips">
+          <button 
+            *ngFor="let template of quickTemplates" 
+            class="template-chip"
+            (click)="loadTemplate(template.value)"
+            [title]="template.value"
+          >
+            <span class="chip-icon">{{ template.icon }}</span>
+            {{ template.name }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- QR Code Display -->
+    <div class="preview-section" *ngIf="qrCodeDataUrl">
+      <div class="section-header">
+        <h2>Your QR Code</h2>
+        <button class="btn-download" (click)="downloadQRCode()">
+          ⬇ Download PNG
+        </button>
+      </div>
+
+      <div class="qr-display">
+        <img [src]="qrCodeDataUrl" alt="Generated QR Code" class="qr-image">
+      </div>
+
+      <div class="qr-info">
+        <p>✓ QR code generated successfully</p>
+        <p>Size: {{ size }}x{{ size }} pixels</p>
+      </div>
+    </div>
+
+    <!-- Customization Options -->
+    <div class="options-section">
+      <h2>Customization Options</h2>
+
+      <div class="options-grid">
+        <div class="option-group">
+          <label>Size (pixels)</label>
+          <input 
+            type="range" 
+            [(ngModel)]="size" 
+            (ngModelChange)="generateQRCode()"
+            min="200" 
+            max="600" 
+            step="50"
+            class="range-input"
+          >
+          <span class="value-display">{{ size }}px</span>
+        </div>
+
+        <div class="option-group">
+          <label>Error Correction</label>
+          <select [(ngModel)]="errorLevel" (ngModelChange)="generateQRCode()" class="select-input">
+            <option *ngFor="let level of errorLevels" [value]="level.value">
+              {{ level.label }}
+            </option>
+          </select>
+          <span class="option-desc">{{ errorLevelDescription }}</span>
+        </div>
+
+        <div class="option-group">
+          <label>Foreground Color</label>
+          <div class="color-picker-group">
+            <input 
+              type="color" 
+              [(ngModel)]="foregroundColor" 
+              (ngModelChange)="generateQRCode()"
+              class="color-input"
+            >
+            <input 
+              type="text" 
+              [(ngModel)]="foregroundColor" 
+              (ngModelChange)="generateQRCode()"
+              class="color-text"
+              placeholder="#000000"
+            >
+          </div>
+        </div>
+
+        <div class="option-group">
+          <label>Background Color</label>
+          <div class="color-picker-group">
+            <input 
+              type="color" 
+              [(ngModel)]="backgroundColor" 
+              (ngModelChange)="generateQRCode()"
+              class="color-input"
+            >
+            <input 
+              type="text" 
+              [(ngModel)]="backgroundColor" 
+              (ngModelChange)="generateQRCode()"
+              class="color-text"
+              placeholder="#ffffff"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="info-section">
+      <h2>About QR Codes</h2>
+      
+      <div class="info-content">
+        <p>
+          QR (Quick Response) codes are two-dimensional barcodes that can store various types of information. 
+          They're widely used for quick access to websites, product information, payment systems, and more.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>📱 Common Uses</h3>
+            <ul>
+              <li>Website URLs and landing pages</li>
+              <li>WiFi network credentials</li>
+              <li>Contact information (vCard)</li>
+              <li>Payment links and crypto wallets</li>
+              <li>Product packaging and menus</li>
+              <li>Event tickets and check-ins</li>
+              <li>App download links</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h3>🎯 Best Practices</h3>
+            <ul>
+              <li>Keep URLs short for smaller codes</li>
+              <li>Test codes before printing</li>
+              <li>Ensure high contrast colors</li>
+              <li>Leave white space around code</li>
+              <li>Use medium error correction</li>
+              <li>Minimum size: 2x2 cm for print</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h3>🔧 Error Correction Levels</h3>
+            <ul>
+              <li><strong>Low (7%):</strong> Fastest scanning</li>
+              <li><strong>Medium (15%):</strong> Balanced choice</li>
+              <li><strong>Quartile (25%):</strong> Good durability</li>
+              <li><strong>High (30%):</strong> Maximum recovery</li>
+            </ul>
+            <p class="note">Higher levels = larger codes but better damage resistance</p>
+          </div>
+
+          <div class="info-card">
+            <h3>💡 QR Code Formats</h3>
+            <ul>
+              <li><strong>URL:</strong> https://example.com</li>
+              <li><strong>Email:</strong> mailto:email&#64;example.com</li>
+              <li><strong>Phone:</strong> tel:+1234567890</li>
+              <li><strong>SMS:</strong> sms:+1234567890</li>
+              <li><strong>WiFi:</strong> WIFI:T:WPA;S:name;P:pass;;</li>
+              <li><strong>GPS:</strong> geo:lat,lng</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="features-section">
+          <h3>Why Use Our QR Code Generator?</h3>
+          <div class="features-list">
+            <div class="feature-item">
+              <span class="feature-icon">✓</span>
+              <div>
+                <strong>100% Free</strong>
+                <p>No watermarks, no limitations, unlimited QR codes</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon">✓</span>
+              <div>
+                <strong>No Registration</strong>
+                <p>Create QR codes instantly without signing up</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon">✓</span>
+              <div>
+                <strong>High Quality</strong>
+                <p>Download PNG images up to 600x600 pixels</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon">✓</span>
+              <div>
+                <strong>Customizable</strong>
+                <p>Change colors, size, and error correction level</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

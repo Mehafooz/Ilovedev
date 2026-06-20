@@ -1,0 +1,204 @@
+<div class="jwt-tool">
+  <div class="tool-header">
+    <h1>JWT Decoder - Decode JSON Web Tokens Online</h1>
+    <p class="tool-description">
+      Free online JWT (JSON Web Token) decoder and analyzer. Decode, parse, and inspect JWT tokens instantly. 
+      Perfect for debugging authentication, viewing claims, and analyzing token structure.
+    </p>
+  </div>
+
+  <div class="tool-content">
+    <!-- Input Section -->
+    <div class="input-section">
+      <div class="section-header">
+        <h2>JWT Token Input</h2>
+        <div class="action-buttons">
+          <button class="btn-secondary" (click)="loadExample()">Load Example</button>
+          <button class="btn-secondary" (click)="clearAll()">Clear</button>
+        </div>
+      </div>
+      <textarea
+        [(ngModel)]="jwtInput"
+        (ngModelChange)="decodeJWT()"
+        placeholder="Paste your JWT token here (e.g., eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...)"
+        class="jwt-input"
+        rows="6"
+      ></textarea>
+      <div class="input-hint">
+        <strong>Note:</strong> JWT tokens are decoded locally in your browser. No data is sent to any server.
+      </div>
+    </div>
+
+    <!-- Error Display -->
+    <div *ngIf="decoded && !decoded.isValid" class="error-section">
+      <div class="error-icon">⚠️</div>
+      <div class="error-content">
+        <h3>Decode Error</h3>
+        <p>{{ decoded.error }}</p>
+      </div>
+    </div>
+
+    <!-- Decoded Results -->
+    <div *ngIf="decoded && decoded.isValid" class="results-container">
+      <!-- Header Section -->
+      <div class="result-section header-section">
+        <div class="result-header">
+          <h3>
+            <span class="section-icon">🔷</span> Header
+          </h3>
+          <button 
+            class="btn-copy" 
+            (click)="copyToClipboard(formatJson(decoded.header), 'header')"
+            [class.copied]="copiedSection === 'header'"
+          >
+            {{ copiedSection === 'header' ? '✓ Copied' : 'Copy' }}
+          </button>
+        </div>
+        <pre class="json-display">{{ formatJson(decoded.header) }}</pre>
+        <div class="info-tags">
+          <span class="tag" *ngIf="decoded.header.alg">Algorithm: {{ decoded.header.alg }}</span>
+          <span class="tag" *ngIf="decoded.header.typ">Type: {{ decoded.header.typ }}</span>
+        </div>
+      </div>
+
+      <!-- Payload Section -->
+      <div class="result-section payload-section">
+        <div class="result-header">
+          <h3>
+            <span class="section-icon">📦</span> Payload (Claims)
+          </h3>
+          <button 
+            class="btn-copy" 
+            (click)="copyToClipboard(formatJson(decoded.payload), 'payload')"
+            [class.copied]="copiedSection === 'payload'"
+          >
+            {{ copiedSection === 'payload' ? '✓ Copied' : 'Copy' }}
+          </button>
+        </div>
+        <pre class="json-display">{{ formatJson(decoded.payload) }}</pre>
+        
+        <!-- Standard Claims -->
+        <div class="claims-info">
+          <h4>Standard Claims</h4>
+          <div class="claim-item" *ngIf="decoded.payload.iss">
+            <strong>iss (Issuer):</strong> {{ decoded.payload.iss }}
+          </div>
+          <div class="claim-item" *ngIf="decoded.payload.sub">
+            <strong>sub (Subject):</strong> {{ decoded.payload.sub }}
+          </div>
+          <div class="claim-item" *ngIf="decoded.payload.aud">
+            <strong>aud (Audience):</strong> {{ decoded.payload.aud }}
+          </div>
+          <div class="claim-item" *ngIf="decoded.payload.exp">
+            <strong>exp (Expiration):</strong> {{ getTimestamp(decoded.payload.exp) }}
+            <span class="expiry-badge" [class.expired]="isExpired(decoded.payload.exp)">
+              {{ isExpired(decoded.payload.exp) ? '❌ Expired' : '✅ Valid' }}
+            </span>
+          </div>
+          <div class="claim-item" *ngIf="decoded.payload.nbf">
+            <strong>nbf (Not Before):</strong> {{ getTimestamp(decoded.payload.nbf) }}
+          </div>
+          <div class="claim-item" *ngIf="decoded.payload.iat">
+            <strong>iat (Issued At):</strong> {{ getTimestamp(decoded.payload.iat) }}
+          </div>
+          <div class="claim-item" *ngIf="decoded.payload.jti">
+            <strong>jti (JWT ID):</strong> {{ decoded.payload.jti }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Signature Section -->
+      <div class="result-section signature-section">
+        <div class="result-header">
+          <h3>
+            <span class="section-icon">🔐</span> Signature
+          </h3>
+          <button 
+            class="btn-copy" 
+            (click)="copyToClipboard(decoded.signature, 'signature')"
+            [class.copied]="copiedSection === 'signature'"
+          >
+            {{ copiedSection === 'signature' ? '✓ Copied' : 'Copy' }}
+          </button>
+        </div>
+        <div class="signature-display">{{ decoded.signature }}</div>
+        <div class="signature-note">
+          <strong>Note:</strong> Signature verification requires the secret key. This tool only decodes the token structure.
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="info-section">
+      <h2>About JSON Web Tokens (JWT)</h2>
+      
+      <div class="info-content">
+        <p>
+          JSON Web Token (JWT) is an open standard (RFC 7519) for securely transmitting information between parties as a JSON object. 
+          JWTs are commonly used for authentication and information exchange in modern web applications.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>🔍 JWT Structure</h3>
+            <p>A JWT consists of three parts separated by dots:</p>
+            <ol>
+              <li><strong>Header:</strong> Token type and algorithm</li>
+              <li><strong>Payload:</strong> Claims (user data)</li>
+              <li><strong>Signature:</strong> Verification hash</li>
+            </ol>
+            <div class="structure-example">
+              <code>xxxxx.yyyyy.zzzzz</code>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h3>💡 Common Use Cases</h3>
+            <ul>
+              <li>User authentication</li>
+              <li>API authorization</li>
+              <li>Single Sign-On (SSO)</li>
+              <li>Information exchange</li>
+              <li>Stateless sessions</li>
+              <li>Mobile app authentication</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h3>✅ JWT Benefits</h3>
+            <ul>
+              <li>Self-contained (all info in token)</li>
+              <li>Stateless authentication</li>
+              <li>Cross-domain compatibility</li>
+              <li>Mobile-friendly</li>
+              <li>JSON format (easy to parse)</li>
+              <li>Scalable architecture</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h3>🔐 Security Best Practices</h3>
+            <ul>
+              <li>Always use HTTPS</li>
+              <li>Set short expiration times</li>
+              <li>Use strong signing algorithms</li>
+              <li>Never store sensitive data</li>
+              <li>Validate on every request</li>
+              <li>Implement token refresh</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="algorithms-info">
+          <h3>Common Signing Algorithms</h3>
+          <ul>
+            <li><strong>HS256:</strong> HMAC with SHA-256 (symmetric)</li>
+            <li><strong>RS256:</strong> RSA with SHA-256 (asymmetric)</li>
+            <li><strong>ES256:</strong> ECDSA with SHA-256 (asymmetric)</li>
+            <li><strong>PS256:</strong> RSA-PSS with SHA-256</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

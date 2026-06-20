@@ -4,6 +4,46 @@
     <app-json-formatter></app-json-formatter>
   </div>
 
+  <!-- Hash Generator Tool -->
+  <div *ngIf="selectedToolId === 'hash-generator'" class="tool-wrapper">
+    <app-hash-generator></app-hash-generator>
+  </div>
+
+  <!-- Base64 Encoder/Decoder Tool -->
+  <div *ngIf="selectedToolId === 'base64-encoder'" class="tool-wrapper">
+    <app-base64-encoder></app-base64-encoder>
+  </div>
+
+  <!-- UUID Generator Tool -->
+  <div *ngIf="selectedToolId === 'uuid-generator'" class="tool-wrapper">
+    <app-uuid-generator></app-uuid-generator>
+  </div>
+
+  <!-- JWT Decoder Tool -->
+  <div *ngIf="selectedToolId === 'jwt-decoder'" class="tool-wrapper">
+    <app-jwt-decoder></app-jwt-decoder>
+  </div>
+
+  <!-- Regex Tester Tool -->
+  <div *ngIf="selectedToolId === 'regex-tester'" class="tool-wrapper">
+    <app-regex-tester></app-regex-tester>
+  </div>
+
+  <!-- QR Code Generator Tool -->
+  <div *ngIf="selectedToolId === 'qr-generator'" class="tool-wrapper">
+    <app-qr-generator></app-qr-generator>
+  </div>
+
+  <!-- IP Address Lookup Tool -->
+  <div *ngIf="selectedToolId === 'ip-lookup'" class="tool-wrapper">
+    <app-ip-lookup></app-ip-lookup>
+  </div>
+
+  <!-- Image Compressor Tool -->
+  <div *ngIf="selectedToolId === 'image-compressor'" class="tool-wrapper">
+    <app-image-compressor></app-image-compressor>
+  </div>
+
   <!-- XML ↔ JSON Tool -->
   <div *ngIf="selectedToolId === 'xml-json'" class="tool-wrapper">
     <app-xml-json></app-xml-json>
@@ -15,7 +55,7 @@
   </div>
 
   <!-- Placeholder for other tools -->
-  <div *ngIf="selectedTool && selectedToolId !== 'json-formatter' && selectedToolId !== 'xml-json' && selectedToolId !== 'xml-formatter'" class="tool-detail">
+  <div *ngIf="selectedTool && selectedTool.status === 'building'" class="tool-detail">
     <span class="status-label">Currently building</span>
     <h1>{{ selectedTool.name }}</h1>
     <p class="tool-desc">This tool is on the roadmap and will be available soon.</p>
@@ -23,17 +63,10 @@
     <div class="tool-content">
       <div class="tool-section">
         <h2>Coming soon</h2>
-        <p>JSON Formatter and XML ↔ JSON are ready to use today. This workspace is being shaped one focused tool at a time.</p>
+        <p>We're adding more powerful developer tools. Check back soon!</p>
       </div>
     </div>
   </div>
-
-  <ng-template #noTool>
-    <div class="no-tool">
-      <h2>Select a Tool</h2>
-      <p>Choose a tool from the left sidebar to get started.</p>
-    </div>
-  </ng-template>
 
   <div *ngIf="!selectedTool && !selectedToolId" class="no-tool">
     <h2>Select a Tool</h2>

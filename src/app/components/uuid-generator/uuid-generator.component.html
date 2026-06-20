@@ -1,0 +1,186 @@
+<div class="uuid-tool">
+  <div class="tool-header">
+    <h1>UUID Generator - Generate Unique IDs Online</h1>
+    <p class="tool-description">
+      Free online UUID (Universally Unique Identifier) generator. Generate single or bulk UUIDs/GUIDs instantly. 
+      Supports UUID v4 (random) and v1 (time-based) with multiple format options.
+    </p>
+  </div>
+
+  <div class="tool-content">
+    <!-- Options Section -->
+    <div class="options-section">
+      <div class="option-group">
+        <label>Version:</label>
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" [(ngModel)]="uuidVersion" value="v4" (change)="generateSingle()">
+            <span>UUID v4 (Random)</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" [(ngModel)]="uuidVersion" value="v1" (change)="generateSingle()">
+            <span>UUID v1 (Time-based)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="option-group">
+        <label>Format:</label>
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" [(ngModel)]="format" value="default" (change)="generateSingle()">
+            <span>Default</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" [(ngModel)]="format" value="uppercase" (change)="generateSingle()">
+            <span>Uppercase</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" [(ngModel)]="format" value="no-hyphens" (change)="generateSingle()">
+            <span>No Hyphens</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Single UUID Generator -->
+    <div class="single-section">
+      <div class="section-header">
+        <h2>Generate Single UUID</h2>
+        <button class="btn-primary" (click)="generateSingle()">
+          ↻ Generate New
+        </button>
+      </div>
+      
+      <div class="uuid-display">
+        <code class="uuid-value">{{ singleUuid }}</code>
+        <button 
+          class="btn-copy" 
+          (click)="copyToClipboard(singleUuid, -1)"
+          [class.copied]="copiedIndex === -1"
+        >
+          {{ copiedIndex === -1 ? '✓ Copied' : 'Copy' }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Bulk UUID Generator -->
+    <div class="bulk-section">
+      <div class="section-header">
+        <h2>Generate Multiple UUIDs</h2>
+        <div class="bulk-controls">
+          <input 
+            type="number" 
+            [(ngModel)]="bulkCount" 
+            min="1" 
+            max="1000" 
+            class="count-input"
+            placeholder="Count"
+          >
+          <button class="btn-primary" (click)="generateBulk()">
+            Generate {{ bulkCount }} UUIDs
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="bulkUuids.length > 0" class="bulk-results">
+        <div class="bulk-header">
+          <span class="result-count">{{ bulkUuids.length }} UUIDs generated</span>
+          <div class="bulk-actions">
+            <button 
+              class="btn-secondary" 
+              (click)="copyAll()"
+              [class.copied]="copiedIndex === -2"
+            >
+              {{ copiedIndex === -2 ? '✓ Copied All' : 'Copy All' }}
+            </button>
+            <button class="btn-secondary" (click)="downloadAsFile()">
+              ↓ Download
+            </button>
+          </div>
+        </div>
+
+        <div class="uuid-list">
+          <div *ngFor="let uuid of bulkUuids; let i = index" class="uuid-item">
+            <span class="uuid-number">{{ i + 1 }}.</span>
+            <code class="uuid-value-small">{{ uuid }}</code>
+            <button 
+              class="btn-copy-small" 
+              (click)="copyToClipboard(uuid, i)"
+              [class.copied]="copiedIndex === i"
+            >
+              {{ copiedIndex === i ? '✓' : 'Copy' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="info-section">
+      <h2>About UUIDs (Universally Unique Identifiers)</h2>
+      
+      <div class="info-content">
+        <p>
+          A UUID is a 128-bit number used to uniquely identify information in computer systems. 
+          Also known as GUID (Globally Unique Identifier), UUIDs are standardized by the Open Software Foundation (OSF).
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>📌 UUID v4 (Random)</h3>
+            <p>Generated using random or pseudo-random numbers. Most commonly used version. Provides 122 bits of randomness with negligible collision probability.</p>
+            <div class="example-box">
+              <strong>Example:</strong><br>
+              <code>550e8400-e29b-41d4-a716-446655440000</code>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h3>⏰ UUID v1 (Time-based)</h3>
+            <p>Generated using timestamp and MAC address. Includes time information making it sortable. Less common due to MAC address privacy concerns.</p>
+            <div class="example-box">
+              <strong>Example:</strong><br>
+              <code>6ba7b810-9dad-11d1-80b4-00c04fd430c8</code>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h3>💡 Common Use Cases</h3>
+            <ul>
+              <li>Database primary keys</li>
+              <li>Distributed system identifiers</li>
+              <li>Session IDs</li>
+              <li>Transaction tracking</li>
+              <li>File naming</li>
+              <li>API request IDs</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h3>✨ UUID Benefits</h3>
+            <ul>
+              <li>No central authority needed</li>
+              <li>Globally unique</li>
+              <li>Can be generated offline</li>
+              <li>Collision probability: ~0%</li>
+              <li>URL-safe (with proper encoding)</li>
+              <li>Standard format (RFC 4122)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="format-info">
+          <h3>UUID Format</h3>
+          <p>Standard UUID format: <code>xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx</code></p>
+          <ul>
+            <li><strong>8-4-4-4-12</strong> hexadecimal digits</li>
+            <li><strong>M</strong> indicates the version (1, 4, etc.)</li>
+            <li><strong>N</strong> indicates the variant</li>
+            <li>Total: 36 characters (32 hex + 4 hyphens)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

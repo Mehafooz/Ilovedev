@@ -26,6 +26,62 @@ export class SidebarComponent {
       route: '/tools/json-formatter',
       status: 'available'
     },
+    {
+      id: 'hash-generator',
+      name: 'Hash Generator',
+      description: 'MD5, SHA1, SHA256, SHA512',
+      route: '/tools/hash-generator',
+      status: 'available'
+    },
+    {
+      id: 'base64-encoder',
+      name: 'Base64 Encoder',
+      description: 'Encode & decode Base64',
+      route: '/tools/base64-encoder',
+      status: 'available'
+    },
+    {
+      id: 'uuid-generator',
+      name: 'UUID Generator',
+      description: 'Generate unique IDs',
+      route: '/tools/uuid-generator',
+      status: 'available'
+    },
+    {
+      id: 'jwt-decoder',
+      name: 'JWT Decoder',
+      description: 'Decode JSON Web Tokens',
+      route: '/tools/jwt-decoder',
+      status: 'available'
+    },
+    {
+      id: 'regex-tester',
+      name: 'Regex Tester',
+      description: 'Test regular expressions',
+      route: '/tools/regex-tester',
+      status: 'available'
+    },
+    {
+      id: 'qr-generator',
+      name: 'QR Code Generator',
+      description: 'Generate QR codes',
+      route: '/tools/qr-generator',
+      status: 'available'
+    },
+    {
+      id: 'ip-lookup',
+      name: 'IP Address Lookup',
+      description: 'Lookup IP information',
+      route: '/tools/ip-lookup',
+      status: 'available'
+    },
+    {
+      id: 'image-compressor',
+      name: 'Image Compressor',
+      description: 'Compress images online',
+      route: '/tools/image-compressor',
+      status: 'available'
+    },
      {
       id: 'xml-formatter',
       name: 'XML Formatter',
@@ -48,31 +104,10 @@ export class SidebarComponent {
       status: 'building'
     },
     {
-      id: 'regex-tester',
-      name: 'Regex Tester',
-      description: 'Currently building',
-      route: '/tools/regex-tester',
-      status: 'building'
-    },
-    {
       id: 'color-picker',
       name: 'Color Picker',
       description: 'Currently building',
       route: '/tools/color-picker',
-      status: 'building'
-    },
-    {
-      id: 'base64-encoder',
-      name: 'Base64 Encoder',
-      description: 'Currently building',
-      route: '/tools/base64-encoder',
-      status: 'building'
-    },
-    {
-      id: 'uuid-generator',
-      name: 'UUID Generator',
-      description: 'Currently building',
-      route: '/tools/uuid-generator',
       status: 'building'
     },
     {

@@ -1,0 +1,203 @@
+<div class="regex-tool">
+  <div class="tool-header">
+    <h1>Regex Tester - Test Regular Expressions Online</h1>
+    <p class="tool-description">
+      Free online regular expression tester and debugger. Test regex patterns with real-time matching, 
+      syntax highlighting, capture groups, and detailed match results. Perfect for developers.
+    </p>
+  </div>
+
+  <div class="tool-content">
+    <!-- Pattern Input -->
+    <div class="pattern-section">
+      <div class="section-header">
+        <h2>Regular Expression Pattern</h2>
+        <div class="action-buttons">
+          <button class="btn-secondary" (click)="loadExample()">Load Example</button>
+          <button class="btn-secondary" (click)="clearAll()">Clear</button>
+        </div>
+      </div>
+
+      <div class="pattern-input-group">
+        <span class="delimiter">/</span>
+        <input
+          type="text"
+          [(ngModel)]="pattern"
+          (ngModelChange)="testRegex()"
+          placeholder="Enter regex pattern (e.g., \d{3}-\d{4})"
+          class="pattern-input"
+        >
+        <span class="delimiter">/</span>
+        <span class="flags-display">{{ flags }}</span>
+      </div>
+
+      <!-- Flags -->
+      <div class="flags-section">
+        <label class="flag-label" *ngFor="let flag of flagOptions">
+          <input 
+            type="checkbox" 
+            [checked]="flags.includes(flag.value)"
+            (change)="toggleFlag(flag.value)"
+          >
+          <span class="flag-name">{{ flag.label }}</span>
+          <span class="flag-desc">{{ flag.description }}</span>
+        </label>
+      </div>
+
+      <!-- Quick Patterns -->
+      <div class="quick-patterns">
+        <span class="quick-label">Quick Patterns:</span>
+        <div class="pattern-chips">
+          <button 
+            *ngFor="let p of quickPatterns" 
+            class="pattern-chip"
+            (click)="loadQuickPattern(p.pattern)"
+          >
+            {{ p.name }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Test String Input -->
+    <div class="test-section">
+      <div class="section-header">
+        <h2>Test String</h2>
+        <span *ngIf="matches.length > 0" class="match-count">
+          {{ matches.length }} match{{ matches.length !== 1 ? 'es' : '' }} found
+        </span>
+      </div>
+      <textarea
+        [(ngModel)]="testString"
+        (ngModelChange)="testRegex()"
+        placeholder="Enter test string to match against..."
+        class="test-input"
+        rows="8"
+      ></textarea>
+    </div>
+
+    <!-- Error Display -->
+    <div *ngIf="error" class="error-message">
+      <span class="error-icon">⚠️</span>
+      <span>{{ error }}</span>
+    </div>
+
+    <!-- Results -->
+    <div *ngIf="testString && pattern && !error" class="results-section">
+      <!-- Highlighted View -->
+      <div class="highlight-section">
+        <h3>Highlighted Matches</h3>
+        <div class="highlighted-text" [innerHTML]="highlightedText"></div>
+      </div>
+
+      <!-- Match Details -->
+      <div *ngIf="matches.length > 0" class="matches-detail">
+        <h3>Match Details</h3>
+        <div *ngFor="let match of matches; let i = index" class="match-item">
+          <div class="match-header">
+            <strong>Match {{ i + 1 }}</strong>
+            <span class="match-position">Position: {{ match.index }}</span>
+          </div>
+          <div class="match-value">
+            <strong>Full Match:</strong> 
+            <code>{{ match.fullMatch }}</code>
+          </div>
+          <div *ngIf="match.groups.length > 0" class="match-groups">
+            <strong>Capture Groups:</strong>
+            <div *ngFor="let group of match.groups; let gi = index" class="group-item">
+              <span class="group-label">Group {{ gi + 1 }}:</span>
+              <code>{{ group || '(empty)' }}</code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Matches -->
+      <div *ngIf="matches.length === 0" class="no-matches">
+        <span class="no-match-icon">🔍</span>
+        <p>No matches found</p>
+      </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="info-section">
+      <h2>Regular Expression Guide</h2>
+      
+      <div class="info-content">
+        <p>
+          Regular expressions (regex) are powerful patterns used for matching and manipulating text. 
+          This tool helps you test and debug your regex patterns with real-time feedback.
+        </p>
+
+        <div class="syntax-grid">
+          <div class="syntax-card">
+            <h3>Character Classes</h3>
+            <ul>
+              <li><code>\d</code> - Any digit (0-9)</li>
+              <li><code>\w</code> - Any word character (a-z, A-Z, 0-9, _)</li>
+              <li><code>\s</code> - Any whitespace</li>
+              <li><code>.</code> - Any character (except newline)</li>
+              <li><code>[abc]</code> - Any of a, b, or c</li>
+              <li><code>[^abc]</code> - Not a, b, or c</li>
+            </ul>
+          </div>
+
+          <div class="syntax-card">
+            <h3>Quantifiers</h3>
+            <ul>
+              <li><code>*</code> - 0 or more</li>
+              <li><code>+</code> - 1 or more</li>
+              <li><code>?</code> - 0 or 1</li>
+              <li><code>&#123;3&#125;</code> - Exactly 3</li>
+              <li><code>&#123;3,&#125;</code> - 3 or more</li>
+              <li><code>&#123;3,5&#125;</code> - Between 3 and 5</li>
+            </ul>
+          </div>
+
+          <div class="syntax-card">
+            <h3>Anchors</h3>
+            <ul>
+              <li><code>^</code> - Start of string/line</li>
+              <li><code>$</code> - End of string/line</li>
+              <li><code>\b</code> - Word boundary</li>
+              <li><code>\B</code> - Not word boundary</li>
+            </ul>
+          </div>
+
+          <div class="syntax-card">
+            <h3>Groups & Alternation</h3>
+            <ul>
+              <li><code>(abc)</code> - Capture group</li>
+              <li><code>(?:abc)</code> - Non-capture group</li>
+              <li><code>a|b</code> - Match a or b</li>
+              <li><code>(?=abc)</code> - Positive lookahead</li>
+              <li><code>(?!abc)</code> - Negative lookahead</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="examples-section">
+          <h3>Common Patterns</h3>
+          <div class="example-list">
+            <div class="example-item">
+              <strong>Email:</strong>
+              <code>[a-zA-Z0-9._%+-]+&#64;[a-zA-Z0-9.-]+\.[a-zA-Z]&#123;2,&#125;</code>
+            </div>
+            <div class="example-item">
+              <strong>URL:</strong>
+              <code>https?://[^\s/$.?#].[^\s]*</code>
+            </div>
+            <div class="example-item">
+              <strong>Phone (US):</strong>
+              <code>\(?\d&#123;3&#125;?\)?[-\s]?\d&#123;3&#125;[-\s]?\d&#123;4&#125;</code>
+            </div>
+            <div class="example-item">
+              <strong>Credit Card:</strong>
+              <code>\d&#123;4&#125;[-\s]?\d&#123;4&#125;[-\s]?\d&#123;4&#125;[-\s]?\d&#123;4&#125;</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

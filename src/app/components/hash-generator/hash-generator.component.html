@@ -1,0 +1,128 @@
+<div class="hash-tool">
+  <div class="tool-header">
+    <h1>Hash Generator - MD5, SHA1, SHA256, SHA512</h1>
+    <p class="tool-description">
+      Generate secure cryptographic hashes online. Perfect for password hashing, file integrity checks, and data verification. 
+      Free MD5, SHA-1, SHA-256, and SHA-512 hash generator tool.
+    </p>
+  </div>
+
+  <div class="tool-content">
+    <!-- Input Section -->
+    <div class="input-section">
+      <div class="section-header">
+        <h2>Input Text</h2>
+        <div class="action-buttons">
+          <button class="btn-secondary" (click)="loadExample()">Load Example</button>
+          <button class="btn-secondary" (click)="clearAll()">Clear</button>
+        </div>
+      </div>
+      <textarea
+        [(ngModel)]="inputText"
+        (ngModelChange)="generateHashes()"
+        placeholder="Enter text to generate hash..."
+        class="input-textarea"
+        rows="6"
+      ></textarea>
+    </div>
+
+    <!-- Hash Results -->
+    <div class="results-section" *ngIf="md5Hash || sha1Hash || sha256Hash || sha512Hash">
+      <h2>Generated Hashes</h2>
+      
+      <!-- MD5 -->
+      <div class="hash-result">
+        <div class="hash-header">
+          <h3>MD5 <span class="hash-length">(128-bit)</span></h3>
+          <button 
+            class="btn-copy" 
+            (click)="copyToClipboard(md5Hash, 'md5')"
+            [class.copied]="copiedHash === 'md5'"
+          >
+            {{ copiedHash === 'md5' ? '✓ Copied' : 'Copy' }}
+          </button>
+        </div>
+        <div class="hash-value">{{ md5Hash }}</div>
+      </div>
+
+      <!-- SHA-1 -->
+      <div class="hash-result">
+        <div class="hash-header">
+          <h3>SHA-1 <span class="hash-length">(160-bit)</span></h3>
+          <button 
+            class="btn-copy" 
+            (click)="copyToClipboard(sha1Hash, 'sha1')"
+            [class.copied]="copiedHash === 'sha1'"
+          >
+            {{ copiedHash === 'sha1' ? '✓ Copied' : 'Copy' }}
+          </button>
+        </div>
+        <div class="hash-value">{{ sha1Hash }}</div>
+      </div>
+
+      <!-- SHA-256 -->
+      <div class="hash-result">
+        <div class="hash-header">
+          <h3>SHA-256 <span class="hash-length">(256-bit)</span></h3>
+          <button 
+            class="btn-copy" 
+            (click)="copyToClipboard(sha256Hash, 'sha256')"
+            [class.copied]="copiedHash === 'sha256'"
+          >
+            {{ copiedHash === 'sha256' ? '✓ Copied' : 'Copy' }}
+          </button>
+        </div>
+        <div class="hash-value">{{ sha256Hash }}</div>
+      </div>
+
+      <!-- SHA-512 -->
+      <div class="hash-result">
+        <div class="hash-header">
+          <h3>SHA-512 <span class="hash-length">(512-bit)</span></h3>
+          <button 
+            class="btn-copy" 
+            (click)="copyToClipboard(sha512Hash, 'sha512')"
+            [class.copied]="copiedHash === 'sha512'"
+          >
+            {{ copiedHash === 'sha512' ? '✓ Copied' : 'Copy' }}
+          </button>
+        </div>
+        <div class="hash-value">{{ sha512Hash }}</div>
+      </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="info-section">
+      <h2>About Hash Algorithms</h2>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>MD5 Hash</h3>
+          <p>128-bit hash function widely used for checksums and data integrity. Note: Not recommended for security-critical applications.</p>
+        </div>
+        <div class="info-card">
+          <h3>SHA-1 Hash</h3>
+          <p>160-bit cryptographic hash function. Deprecated for security purposes but still used in legacy systems.</p>
+        </div>
+        <div class="info-card">
+          <h3>SHA-256 Hash</h3>
+          <p>Part of SHA-2 family. Widely used in blockchain, SSL certificates, and secure password hashing. Recommended for most use cases.</p>
+        </div>
+        <div class="info-card">
+          <h3>SHA-512 Hash</h3>
+          <p>512-bit hash offering maximum security. Ideal for highly sensitive data and applications requiring strong cryptographic guarantees.</p>
+        </div>
+      </div>
+
+      <div class="use-cases">
+        <h3>Common Use Cases</h3>
+        <ul>
+          <li><strong>Password Storage:</strong> Hash passwords before storing in databases</li>
+          <li><strong>File Integrity:</strong> Verify file downloads and detect tampering</li>
+          <li><strong>Digital Signatures:</strong> Create unique identifiers for documents</li>
+          <li><strong>Blockchain:</strong> Mining and transaction verification</li>
+          <li><strong>Data Deduplication:</strong> Identify duplicate content efficiently</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

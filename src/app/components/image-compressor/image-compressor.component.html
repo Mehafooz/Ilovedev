@@ -1,0 +1,291 @@
+<div class="compressor-tool">
+  <div class="tool-header">
+    <h1>Image Compressor - Compress Images Online Free</h1>
+    <p class="tool-description">
+      Free online image compressor. Reduce image file size without losing quality. 
+      Compress JPEG, PNG, and WebP images instantly. Fast, secure, and works offline in your browser.
+    </p>
+  </div>
+
+  <div class="tool-content">
+    <!-- Upload Section -->
+    <div class="upload-section" *ngIf="!compressedImage">
+      <div class="upload-area" (click)="triggerFileInput()">
+        <input 
+          type="file" 
+          id="fileInput"
+          (change)="onFileSelected($event)" 
+          accept="image/*"
+          class="file-input"
+          hidden
+        >
+        <div class="upload-content">
+          <span class="upload-icon">📁</span>
+          <h3>Click to Upload Image</h3>
+          <p>or drag and drop</p>
+          <span class="upload-formats">Supports: JPEG, PNG, WebP (Max 10MB)</span>
+        </div>
+      </div>
+
+      <div *ngIf="error" class="error-message">
+        <span class="error-icon">⚠️</span>
+        <span>{{ error }}</span>
+      </div>
+
+      <div *ngIf="processing" class="processing-overlay">
+        <div class="spinner"></div>
+        <p>Compressing image...</p>
+      </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="settings-section" *ngIf="!compressedImage && !processing">
+      <h2>Compression Settings</h2>
+
+      <div class="settings-grid">
+        <!-- Quality -->
+        <div class="setting-group">
+          <label>Quality ({{ (quality * 100) | number:'1.0-0' }}%)</label>
+          <input 
+            type="range" 
+            [(ngModel)]="quality" 
+            min="0.1" 
+            max="1" 
+            step="0.1"
+            class="range-input"
+          >
+          <div class="preset-buttons">
+            <button 
+              *ngFor="let preset of qualityPresets"
+              class="preset-btn"
+              (click)="setQualityPreset(preset.value)"
+              [class.active]="quality === preset.value"
+            >
+              {{ preset.name }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Size -->
+        <div class="setting-group">
+          <label>Maximum Dimensions</label>
+          <div class="dimension-inputs">
+            <input 
+              type="number" 
+              [(ngModel)]="maxWidth" 
+              placeholder="Width"
+              class="dimension-input"
+            >
+            <span>×</span>
+            <input 
+              type="number" 
+              [(ngModel)]="maxHeight" 
+              placeholder="Height"
+              class="dimension-input"
+            >
+          </div>
+          <div class="preset-buttons">
+            <button 
+              *ngFor="let preset of sizePresets"
+              class="preset-btn"
+              (click)="setSizePreset(preset.width, preset.height)"
+            >
+              {{ preset.name }}
+            </button>
+          </div>
+          <label class="checkbox-label">
+            <input type="checkbox" [(ngModel)]="maintainAspectRatio">
+            <span>Maintain aspect ratio</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Section -->
+    <div class="results-section" *ngIf="compressedImage">
+      <div class="section-header">
+        <h2>Compression Results</h2>
+        <button class="btn-reset" (click)="reset()">
+          ↻ Upload New Image
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-card">
+        <div class="stat-item">
+          <label>Original Size</label>
+          <span class="stat-value">{{ formatFileSize(compressedImage.original.size) }}</span>
+        </div>
+        <div class="stat-arrow">→</div>
+        <div class="stat-item">
+          <label>Compressed Size</label>
+          <span class="stat-value success">{{ formatFileSize(compressedImage.compressed.size) }}</span>
+        </div>
+        <div class="stat-badge">
+          <span class="badge-label">Saved</span>
+          <span class="badge-value">{{ getCompressionRatio() }}%</span>
+        </div>
+      </div>
+
+      <!-- Image Comparison -->
+      <div class="comparison-grid">
+        <div class="image-preview">
+          <h3>Original</h3>
+          <img [src]="compressedImage.original.url" alt="Original image">
+          <div class="image-info">
+            <p>{{ compressedImage.original.width }} × {{ compressedImage.original.height }}</p>
+            <p>{{ formatFileSize(compressedImage.original.size) }}</p>
+          </div>
+        </div>
+
+        <div class="image-preview">
+          <h3>Compressed</h3>
+          <img [src]="compressedImage.compressed.url" alt="Compressed image">
+          <div class="image-info">
+            <p>{{ compressedImage.compressed.width }} × {{ compressedImage.compressed.height }}</p>
+            <p>{{ formatFileSize(compressedImage.compressed.size) }}</p>
+          </div>
+          <button class="btn-download" (click)="downloadCompressed()">
+            ⬇ Download Compressed Image
+          </button>
+        </div>
+      </div>
+
+      <!-- Adjustment Controls -->
+      <div class="adjustment-section">
+        <h3>Adjust Compression</h3>
+        <div class="adjustment-controls">
+          <div class="control-group">
+            <label>Quality: {{ (quality * 100) | number:'1.0-0' }}%</label>
+            <input 
+              type="range" 
+              [(ngModel)]="quality" 
+              (ngModelChange)="compressImage(compressedImage.original.file)"
+              min="0.1" 
+              max="1" 
+              step="0.1"
+              class="range-input"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="info-section">
+      <h2>About Image Compression</h2>
+      
+      <div class="info-content">
+        <p>
+          Image compression reduces file size while maintaining visual quality. Our tool compresses images directly in your browser - 
+          no uploads to servers, ensuring privacy and speed.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>✨ Benefits</h3>
+            <ul>
+              <li>Faster website loading times</li>
+              <li>Reduced bandwidth usage</li>
+              <li>Better SEO rankings</li>
+              <li>Save storage space</li>
+              <li>Faster image uploads</li>
+              <li>Improved user experience</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h3>🎯 Best Use Cases</h3>
+            <ul>
+              <li>Website images and banners</li>
+              <li>Social media posts</li>
+              <li>Email attachments</li>
+              <li>Blog and article images</li>
+              <li>Product photos for e-commerce</li>
+              <li>Mobile app assets</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h3>⚙️ How It Works</h3>
+            <ul>
+              <li><strong>Upload:</strong> Select your image file</li>
+              <li><strong>Process:</strong> Image is compressed locally</li>
+              <li><strong>Preview:</strong> Compare before/after</li>
+              <li><strong>Adjust:</strong> Fine-tune quality</li>
+              <li><strong>Download:</strong> Get compressed image</li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h3>💡 Compression Tips</h3>
+            <ul>
+              <li>Use 80% quality for best balance</li>
+              <li>Resize large images before compression</li>
+              <li>JPEG for photos, PNG for graphics</li>
+              <li>Test different quality settings</li>
+              <li>Maintain aspect ratio for best results</li>
+              <li>Compress before uploading to web</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="features-section">
+          <h3>Why Use Our Image Compressor?</h3>
+          <div class="features-list">
+            <div class="feature-item">
+              <span class="feature-icon">🔒</span>
+              <div>
+                <strong>100% Private</strong>
+                <p>All processing happens in your browser. Images never leave your device.</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon">⚡</span>
+              <div>
+                <strong>Lightning Fast</strong>
+                <p>Instant compression with no server uploads or waiting.</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon">🆓</span>
+              <div>
+                <strong>Completely Free</strong>
+                <p>No watermarks, no file limits, unlimited compressions.</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon">📱</span>
+              <div>
+                <strong>Works Offline</strong>
+                <p>Compress images without internet connection after initial load.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quality-guide">
+          <h3>Quality Settings Guide</h3>
+          <div class="guide-grid">
+            <div class="guide-item">
+              <strong>90-100%</strong>
+              <p>Highest quality. Minimal compression. Best for printing or archiving.</p>
+            </div>
+            <div class="guide-item">
+              <strong>70-90%</strong>
+              <p>High quality. Good compression. Recommended for most web images.</p>
+            </div>
+            <div class="guide-item">
+              <strong>50-70%</strong>
+              <p>Medium quality. Better compression. Good for thumbnails and previews.</p>
+            </div>
+            <div class="guide-item">
+              <strong>Below 50%</strong>
+              <p>Lower quality. Maximum compression. Use only when size is critical.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
