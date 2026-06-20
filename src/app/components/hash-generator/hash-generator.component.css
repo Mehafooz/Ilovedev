@@ -81,8 +81,8 @@
 
 .input-textarea:focus {
   outline: none;
-  border-color: #4CAF50;
-  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+  border-color: #1a1a1a;
+  box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.1);
 }
 
 .results-section {
@@ -136,9 +136,9 @@
 
 .btn-copy {
   padding: 0.4rem 0.8rem;
-  background: #4CAF50;
+  background: #1a1a1a;
   color: white;
-  border: none;
+  border: 1px solid #1a1a1a;
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.875rem;
@@ -147,11 +147,13 @@
 }
 
 .btn-copy:hover {
-  background: #45a049;
+  background: #333;
+  border-color: #333;
 }
 
 .btn-copy.copied {
-  background: #2196F3;
+  background: #666;
+  border-color: #666;
 }
 
 .hash-value {
@@ -194,8 +196,9 @@
 
 .info-card h3 {
   font-size: 1rem;
-  color: #4CAF50;
+  color: #1a1a1a;
   margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
 .info-card p {
@@ -206,16 +209,17 @@
 }
 
 .use-cases {
-  background: #f0f8ff;
+  background: #f9f9f9;
   padding: 1.5rem;
   border-radius: 6px;
-  border-left: 4px solid #2196F3;
+  border-left: 4px solid #1a1a1a;
 }
 
 .use-cases h3 {
   font-size: 1.1rem;
   color: #1a1a1a;
   margin-bottom: 1rem;
+  font-weight: 600;
 }
 
 .use-cases ul {
@@ -232,7 +236,8 @@
 }
 
 .use-cases strong {
-  color: #2196F3;
+  color: #1a1a1a;
+  font-weight: 600;
 }
 
 @media (max-width: 768px) {

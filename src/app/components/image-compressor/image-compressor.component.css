@@ -45,8 +45,8 @@
 }
 
 .upload-area:hover {
-  border-color: #9C27B0;
-  background: #f8f0fa;
+  border-color: #1a1a1a;
+  background: #f9f9f9;
 }
 
 .upload-content {
@@ -96,7 +96,7 @@
   width: 50px;
   height: 50px;
   border: 4px solid #f3f3f3;
-  border-top: 4px solid #9C27B0;
+  border-top: 4px solid #1a1a1a;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
@@ -168,7 +168,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #9C27B0;
+  background: #1a1a1a;
   cursor: pointer;
 }
 
@@ -176,7 +176,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #9C27B0;
+  background: #1a1a1a;
   cursor: pointer;
   border: none;
 }
@@ -198,14 +198,14 @@
 }
 
 .preset-btn:hover {
-  background: #e8e8e8;
-  border-color: #9C27B0;
+  background: #f9f9f9;
+  border-color: #1a1a1a;
 }
 
 .preset-btn.active {
-  background: #9C27B0;
+  background: #1a1a1a;
   color: white;
-  border-color: #9C27B0;
+  border-color: #1a1a1a;
 }
 
 .dimension-inputs {
@@ -224,8 +224,8 @@
 
 .dimension-input:focus {
   outline: none;
-  border-color: #9C27B0;
-  box-shadow: 0 0 0 2px rgba(156, 39, 176, 0.1);
+  border-color: #1a1a1a;
+  box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.1);
 }
 
 .checkbox-label {
@@ -286,7 +286,7 @@
   justify-content: center;
   gap: 1.5rem;
   padding: 1.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #1a1a1a;
   border-radius: 8px;
   color: white;
   margin-bottom: 1.5rem;
@@ -311,7 +311,7 @@
 }
 
 .stat-value.success {
-  color: #4caf50;
+  color: #fff;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
@@ -361,9 +361,10 @@
 
 .image-preview h3 {
   font-size: 1rem;
-  color: #9C27B0;
+  color: #1a1a1a;
   margin: 0;
   text-align: center;
+  font-weight: 600;
 }
 
 .image-preview img {
@@ -387,9 +388,9 @@
 
 .btn-download {
   padding: 0.75rem 1.5rem;
-  background: #9C27B0;
+  background: #1a1a1a;
   color: white;
-  border: none;
+  border: 1px solid #1a1a1a;
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
@@ -398,8 +399,8 @@
 }
 
 .btn-download:hover {
-  background: #7B1FA2;
-  transform: translateY(-1px);
+  background: #333;
+  border-color: #333;
 }
 
 .adjustment-section {
@@ -468,8 +469,9 @@
 
 .info-card h3 {
   font-size: 1rem;
-  color: #9C27B0;
+  color: #1a1a1a;
   margin-bottom: 0.75rem;
+  font-weight: 600;
 }
 
 .info-card ul {
@@ -487,7 +489,7 @@
 
 .info-card li:before {
   content: "• ";
-  color: #9C27B0;
+  color: #1a1a1a;
   font-weight: bold;
   margin-right: 0.5rem;
 }
@@ -528,8 +530,9 @@
 
 .feature-item strong {
   display: block;
-  color: #9C27B0;
+  color: #1a1a1a;
   margin-bottom: 0.25rem;
+  font-weight: 600;
 }
 
 .feature-item p {
@@ -540,16 +543,17 @@
 }
 
 .quality-guide {
-  background: #fff8e1;
+  background: #f9f9f9;
   padding: 1.5rem;
   border-radius: 6px;
-  border-left: 4px solid #ffc107;
+  border-left: 4px solid #1a1a1a;
 }
 
 .quality-guide h3 {
   font-size: 1.1rem;
   color: #1a1a1a;
   margin-bottom: 1rem;
+  font-weight: 600;
 }
 
 .guide-grid {
@@ -562,14 +566,15 @@
   background: white;
   padding: 1rem;
   border-radius: 6px;
-  border: 1px solid #ffe082;
+  border: 1px solid #e0e0e0;
 }
 
 .guide-item strong {
   display: block;
-  color: #f57c00;
+  color: #1a1a1a;
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
 .guide-item p {

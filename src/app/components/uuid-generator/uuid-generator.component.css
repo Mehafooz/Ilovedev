@@ -102,7 +102,7 @@
 
 .btn-primary {
   padding: 0.75rem 1.5rem;
-  background: #4CAF50;
+  background: #000;
   color: white;
   border: none;
   border-radius: 6px;
@@ -113,7 +113,7 @@
 }
 
 .btn-primary:hover {
-  background: #45a049;
+  background: #333;
   transform: translateY(-1px);
 }
 
@@ -131,13 +131,13 @@
   flex: 1;
   font-family: 'Courier New', monospace;
   font-size: 1.1rem;
-  color: #2196F3;
+  color: #000;
   word-break: break-all;
 }
 
 .btn-copy {
   padding: 0.6rem 1.2rem;
-  background: #2196F3;
+  background: #000;
   color: white;
   border: none;
   border-radius: 4px;
@@ -149,11 +149,11 @@
 }
 
 .btn-copy:hover {
-  background: #1976D2;
+  background: #333;
 }
 
 .btn-copy.copied {
-  background: #4CAF50;
+  background: #666;
 }
 
 .bulk-controls {
@@ -172,7 +172,7 @@
 
 .count-input:focus {
   outline: none;
-  border-color: #4CAF50;
+  border-color: #000;
 }
 
 .bulk-results {
@@ -216,9 +216,9 @@
 }
 
 .btn-secondary.copied {
-  background: #4CAF50;
+  background: #666;
   color: white;
-  border-color: #4CAF50;
+  border-color: #666;
 }
 
 .uuid-list {
@@ -262,7 +262,7 @@
 
 .btn-copy-small {
   padding: 0.4rem 0.8rem;
-  background: #2196F3;
+  background: #000;
   color: white;
   border: none;
   border-radius: 4px;
@@ -274,11 +274,11 @@
 }
 
 .btn-copy-small:hover {
-  background: #1976D2;
+  background: #333;
 }
 
 .btn-copy-small.copied {
-  background: #4CAF50;
+  background: #666;
 }
 
 .info-section {
@@ -316,7 +316,7 @@
 
 .info-card h3 {
   font-size: 1rem;
-  color: #4CAF50;
+  color: #000;
   margin-bottom: 0.75rem;
 }
 
@@ -342,7 +342,7 @@
 
 .info-card li:before {
   content: "• ";
-  color: #4CAF50;
+  color: #000;
   font-weight: bold;
   margin-right: 0.5rem;
 }
@@ -358,15 +358,15 @@
 .example-box code {
   font-family: 'Courier New', monospace;
   font-size: 0.8rem;
-  color: #2196F3;
+  color: #000;
   word-break: break-all;
 }
 
 .format-info {
-  background: #f0f8ff;
+  background: #f5f5f5;
   padding: 1.5rem;
   border-radius: 6px;
-  border-left: 4px solid #2196F3;
+  border-left: 4px solid #000;
 }
 
 .format-info h3 {
@@ -384,7 +384,7 @@
   padding: 0.2rem 0.5rem;
   border-radius: 3px;
   font-family: 'Courier New', monospace;
-  color: #2196F3;
+  color: #000;
   border: 1px solid #e0e0e0;
 }
 
