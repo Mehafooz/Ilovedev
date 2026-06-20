@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-json-formatter',
@@ -10,6 +11,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './json-formatter.component.css'
 })
 export class JsonFormatterComponent implements OnInit {
+  constructor(private seo: SeoService) {}
+
   inputJson: string = '';
   outputJson: string = '';
   error: string | null = null;
@@ -23,6 +26,7 @@ export class JsonFormatterComponent implements OnInit {
   indentSize: number = 2;
 
   ngOnInit(): void {
+    this.seo.updateMetaTags(this.seo.getToolSEO('json-formatter'));
     // Initialize with sample JSON
     this.inputJson = JSON.stringify({
       name: 'JSON Formatter',

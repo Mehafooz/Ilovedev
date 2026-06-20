@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Title, Meta } from '@angular/platform-browser';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-qr-generator',
@@ -10,7 +10,12 @@ import { Title, Meta } from '@angular/platform-browser';
   templateUrl: './qr-generator.component.html',
   styleUrl: './qr-generator.component.css'
 })
-export class QrGeneratorComponent {
+export class QrGeneratorComponent implements OnInit {
+  constructor(private seo: SeoService) {}
+
+  ngOnInit(): void {
+    this.seo.updateMetaTags(this.seo.getToolSEO('qr-generator'));
+  }
   inputText: string = '';
   qrCodeDataUrl: string = '';
   size: number = 300;
@@ -33,19 +38,6 @@ export class QrGeneratorComponent {
     { name: 'WiFi', value: 'WIFI:T:WPA;S:NetworkName;P:Password;;', icon: '📶' },
     { name: 'Location', value: 'geo:37.7749,-122.4194', icon: '📍' }
   ];
-
-  constructor(private titleService: Title, private metaService: Meta) {
-    // SEO Optimization
-    this.titleService.setTitle('Free QR Code Generator Online - Create QR Codes Instantly | DevTools');
-    this.metaService.updateTag({ 
-      name: 'description', 
-      content: 'Free online QR code generator. Create custom QR codes for URLs, text, WiFi, vCards, and more. Download high-resolution QR codes instantly. No registration required.' 
-    });
-    this.metaService.updateTag({ 
-      name: 'keywords', 
-      content: 'qr code generator, create qr code, qr code maker, free qr code, online qr generator, custom qr code, qr code creator, qr scanner' 
-    });
-  }
 
   get errorLevelDescription(): string {
     const level = this.errorLevels.find(l => l.value === this.errorLevel);

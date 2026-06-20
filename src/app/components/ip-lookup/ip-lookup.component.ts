@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Title, Meta } from '@angular/platform-browser';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { SeoService } from '../../services/seo.service';
 
 interface IpInfo {
   ip: string;
@@ -37,23 +37,12 @@ export class IpLookupComponent implements OnInit {
   ];
 
   constructor(
-    private titleService: Title, 
-    private metaService: Meta,
+    private seo: SeoService,
     private http: HttpClient
-  ) {
-    // SEO Optimization
-    this.titleService.setTitle('Free IP Address Lookup Tool - Check IP Location & Details Online');
-    this.metaService.updateTag({ 
-      name: 'description', 
-      content: 'Free IP address lookup tool. Check your IP address, location, ISP, and geolocation details. Find IP information for any IP address instantly.' 
-    });
-    this.metaService.updateTag({ 
-      name: 'keywords', 
-      content: 'ip lookup, ip address lookup, what is my ip, ip location, ip geolocation, find ip address, ip checker, my ip address' 
-    });
-  }
+  ) {}
 
   ngOnInit() {
+    this.seo.updateMetaTags(this.seo.getToolSEO('ip-lookup'));
     this.getMyIp();
   }
 

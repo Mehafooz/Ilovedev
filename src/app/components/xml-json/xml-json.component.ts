@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-xml-json',
@@ -10,6 +11,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './xml-json.component.css'
 })
 export class XmlJsonComponent implements OnInit {
+  constructor(private seo: SeoService) {}
+
   inputValue: string = '';
   outputValue: string = '';
   error: string | null = null;
@@ -18,6 +21,7 @@ export class XmlJsonComponent implements OnInit {
   mode: 'xml-to-json' | 'json-to-xml' = 'xml-to-json';
 
   ngOnInit(): void {
+    this.seo.updateMetaTags(this.seo.getToolSEO('xml-json'));
     const sampleXml = `<root>
   <item>
     <name>Example</name>

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Title, Meta } from '@angular/platform-browser';
+import { SeoService } from '../../services/seo.service';
 
 interface DecodedJWT {
   header: any;
@@ -18,23 +18,16 @@ interface DecodedJWT {
   templateUrl: './jwt-decoder.component.html',
   styleUrl: './jwt-decoder.component.css'
 })
-export class JwtDecoderComponent {
+export class JwtDecoderComponent implements OnInit {
+  constructor(private seo: SeoService) {}
+
+  ngOnInit(): void {
+    this.seo.updateMetaTags(this.seo.getToolSEO('jwt-decoder'));
+  }
+
   jwtInput: string = '';
   decoded: DecodedJWT | null = null;
   copiedSection: string = '';
-
-  constructor(private titleService: Title, private metaService: Meta) {
-    // SEO Optimization
-    this.titleService.setTitle('Free JWT Decoder Online - Decode JSON Web Tokens | DevTools');
-    this.metaService.updateTag({ 
-      name: 'description', 
-      content: 'Free online JWT decoder tool. Decode and analyze JSON Web Tokens (JWT) instantly. View header, payload, and signature. Perfect for debugging authentication tokens.' 
-    });
-    this.metaService.updateTag({ 
-      name: 'keywords', 
-      content: 'jwt decoder, jwt parser, json web token decoder, decode jwt online, jwt debugger, jwt tool, jwt analyzer, free jwt decoder' 
-    });
-  }
 
   decodeJWT() {
     this.copiedSection = '';

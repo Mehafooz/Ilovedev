@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Title, Meta } from '@angular/platform-browser';
+import { SeoService } from '../../services/seo.service';
 
 interface Match {
   fullMatch: string;
@@ -16,7 +16,9 @@ interface Match {
   templateUrl: './regex-tester.component.html',
   styleUrl: './regex-tester.component.css'
 })
-export class RegexTesterComponent {
+export class RegexTesterComponent implements OnInit {
+  constructor(private seo: SeoService) {}
+
   pattern: string = '';
   flags: string = 'g';
   testString: string = '';
@@ -40,17 +42,8 @@ export class RegexTesterComponent {
     { name: 'Date (YYYY-MM-DD)', pattern: '\\d{4}-\\d{2}-\\d{2}' }
   ];
 
-  constructor(private titleService: Title, private metaService: Meta) {
-    // SEO Optimization
-    this.titleService.setTitle('Free Regex Tester Online - Test Regular Expressions | DevTools');
-    this.metaService.updateTag({ 
-      name: 'description', 
-      content: 'Free online regex tester and debugger. Test regular expressions with real-time matching, syntax highlighting, and detailed results. Perfect for validating patterns.' 
-    });
-    this.metaService.updateTag({ 
-      name: 'keywords', 
-      content: 'regex tester, regular expression tester, regex debugger, regex tool online, test regex, regex validator, regex match, free regex tool' 
-    });
+  ngOnInit(): void {
+    this.seo.updateMetaTags(this.seo.getToolSEO('regex-tester'));
   }
 
   testRegex() {

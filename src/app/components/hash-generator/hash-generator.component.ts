@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Title, Meta } from '@angular/platform-browser';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-hash-generator',
@@ -10,7 +10,9 @@ import { Title, Meta } from '@angular/platform-browser';
   templateUrl: './hash-generator.component.html',
   styleUrl: './hash-generator.component.css'
 })
-export class HashGeneratorComponent {
+export class HashGeneratorComponent implements OnInit {
+  constructor(private seo: SeoService) {}
+
   inputText: string = '';
   md5Hash: string = '';
   sha1Hash: string = '';
@@ -18,17 +20,8 @@ export class HashGeneratorComponent {
   sha512Hash: string = '';
   copiedHash: string = '';
 
-  constructor(private titleService: Title, private metaService: Meta) {
-    // SEO Optimization
-    this.titleService.setTitle('Free Online Hash Generator - MD5, SHA1, SHA256, SHA512 | DevTools');
-    this.metaService.updateTag({ 
-      name: 'description', 
-      content: 'Free online hash generator tool. Generate MD5, SHA1, SHA256, SHA512 hashes instantly. Secure hash algorithm for passwords, files, and text. No registration required.' 
-    });
-    this.metaService.updateTag({ 
-      name: 'keywords', 
-      content: 'hash generator, md5 generator, sha256 generator, sha1, sha512, online hash tool, password hash, file hash, text hash, free hash generator' 
-    });
+  ngOnInit(): void {
+    this.seo.updateMetaTags(this.seo.getToolSEO('hash-generator'));
   }
 
   async generateHashes() {

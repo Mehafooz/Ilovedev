@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-xml-formatter',
@@ -10,6 +11,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './xml-formatter.component.css'
 })
 export class XmlFormatterComponent implements OnInit {
+  constructor(private seo: SeoService) {}
+
   inputXml: string = '';
   outputXml: string = '';
   error: string | null = null;
@@ -23,6 +26,7 @@ export class XmlFormatterComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.seo.updateMetaTags(this.seo.getToolSEO('xml-formatter'));
     this.inputXml = `<catalog>
   <book id="bk101">
     <author>Gambardella, Matthew</author>

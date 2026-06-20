@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Title, Meta } from '@angular/platform-browser';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-uuid-generator',
@@ -10,7 +10,9 @@ import { Title, Meta } from '@angular/platform-browser';
   templateUrl: './uuid-generator.component.html',
   styleUrl: './uuid-generator.component.css'
 })
-export class UuidGeneratorComponent {
+export class UuidGeneratorComponent implements OnInit {
+  constructor(private seo: SeoService) {}
+
   singleUuid: string = '';
   bulkUuids: string[] = [];
   bulkCount: number = 10;
@@ -18,18 +20,8 @@ export class UuidGeneratorComponent {
   format: 'default' | 'uppercase' | 'no-hyphens' = 'default';
   copiedIndex: number = -1;
 
-  constructor(private titleService: Title, private metaService: Meta) {
-    // SEO Optimization
-    this.titleService.setTitle('Free UUID Generator Online - Generate UUIDs/GUIDs Instantly | DevTools');
-    this.metaService.updateTag({ 
-      name: 'description', 
-      content: 'Free online UUID/GUID generator. Generate unique identifiers instantly. Supports bulk generation, UUID v4, v1, with multiple format options. Perfect for developers.' 
-    });
-    this.metaService.updateTag({ 
-      name: 'keywords', 
-      content: 'uuid generator, guid generator, unique id generator, uuid v4, uuid online, generate uuid, bulk uuid generator, free uuid tool' 
-    });
-    
+  ngOnInit(): void {
+    this.seo.updateMetaTags(this.seo.getToolSEO('uuid-generator'));
     this.generateSingle();
   }
 

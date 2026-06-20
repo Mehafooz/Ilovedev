@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Title, Meta } from '@angular/platform-browser';
+import { SeoService } from '../../services/seo.service';
 
 interface CompressedImage {
   original: {
@@ -26,7 +26,12 @@ interface CompressedImage {
   templateUrl: './image-compressor.component.html',
   styleUrl: './image-compressor.component.css'
 })
-export class ImageCompressorComponent {
+export class ImageCompressorComponent implements OnInit {
+  constructor(private seo: SeoService) {}
+
+  ngOnInit(): void {
+    this.seo.updateMetaTags(this.seo.getToolSEO('image-compressor'));
+  }
   quality: number = 0.8;
   maxWidth: number = 1920;
   maxHeight: number = 1080;
@@ -49,19 +54,6 @@ export class ImageCompressorComponent {
     { name: 'Standard', width: 800, height: 600 },
     { name: 'Thumbnail', width: 400, height: 300 }
   ];
-
-  constructor(private titleService: Title, private metaService: Meta) {
-    // SEO Optimization
-    this.titleService.setTitle('Free Image Compressor Online - Reduce Image Size | DevTools');
-    this.metaService.updateTag({ 
-      name: 'description', 
-      content: 'Free online image compressor. Compress JPEG, PNG, WebP images and reduce file size without losing quality. Fast, secure, and easy to use.' 
-    });
-    this.metaService.updateTag({ 
-      name: 'keywords', 
-      content: 'image compressor, compress image, reduce image size, image optimizer, compress jpeg, compress png, image compression online, free image compressor' 
-    });
-  }
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];

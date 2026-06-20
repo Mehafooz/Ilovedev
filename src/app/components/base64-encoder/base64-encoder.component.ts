@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Title, Meta } from '@angular/platform-browser';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-base64-encoder',
@@ -10,24 +10,17 @@ import { Title, Meta } from '@angular/platform-browser';
   templateUrl: './base64-encoder.component.html',
   styleUrl: './base64-encoder.component.css'
 })
-export class Base64EncoderComponent {
+export class Base64EncoderComponent implements OnInit {
+  constructor(private seo: SeoService) {}
+
   mode: 'encode' | 'decode' = 'encode';
   inputText: string = '';
   outputText: string = '';
   error: string = '';
   copied: boolean = false;
 
-  constructor(private titleService: Title, private metaService: Meta) {
-    // SEO Optimization
-    this.titleService.setTitle('Free Base64 Encoder Decoder Online Tool | Encode & Decode Base64');
-    this.metaService.updateTag({ 
-      name: 'description', 
-      content: 'Free online Base64 encoder and decoder. Convert text to Base64 and decode Base64 strings instantly. Perfect for encoding images, text, and files. No registration required.' 
-    });
-    this.metaService.updateTag({ 
-      name: 'keywords', 
-      content: 'base64 encoder, base64 decoder, base64 converter, encode base64, decode base64, base64 online tool, free base64, base64 image encoder' 
-    });
+  ngOnInit(): void {
+    this.seo.updateMetaTags(this.seo.getToolSEO('base64-encoder'));
   }
 
   switchMode(newMode: 'encode' | 'decode') {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { SeoService } from '../../services/seo.service';
 import { JsonFormatterComponent } from '../../components/json-formatter/json-formatter.component';
 import { XmlJsonComponent } from '../../components/xml-json/xml-json.component';
 import { XmlFormatterComponent } from '../../components/xml-formatter/xml-formatter.component';
@@ -130,13 +131,29 @@ export class ToolsComponent implements OnInit {
   selectedTool: Tool | null = null;
   selectedToolId: string | null = null;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private seo: SeoService
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params: any) => {
       if (params['id']) {
         this.selectedToolId = params['id'];
         this.selectedTool = this.tools.find((t: Tool) => t.id === params['id']) || null;
+        
+        // Update SEO for specific tool
+        if (this.selectedToolId) {
+          this.seo.updateMetaTags(this.seo.getToolSEO(this.selectedToolId));
+        }
+      } else {
+        // Update SEO for tools listing page
+        this.seo.updateMetaTags({
+          title: 'All Developer Tools - Free Online Utilities | ILoveDev',
+          description: 'Browse all free online developer tools. QR Code Generator, UUID Generator, JWT Decoder, Base64 Encoder, Regex Tester, and more. No signup required.',
+          keywords: 'developer tools, online tools, free utilities, web tools',
+          url: 'https://ilovedev.in/tools'
+        });
       }
     });
   }
